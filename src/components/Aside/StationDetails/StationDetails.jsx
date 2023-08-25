@@ -30,7 +30,7 @@ function StationNameField({
             {...params}
             label={label}
             error={invalidInput}
-            style={{ width: "100%", marginLeft: 0, marginRight: 0 }}
+            style={{ width: "100%", m:0 }}
             helperText={invalidInput ? "Invalid input" : " "}
           />
         )}
@@ -77,27 +77,31 @@ function StationDetails({
           invalidInput={isInvalidInput("to")}
           value={values.to}
         />
-        <Button
-          type="button"
-          variant="contained"
-          sx={{ maxWidth: "250px", marginBottom: 1, marginTop: 1 }}
-          onClick={() => setSubmitted(true)}
+        <Box
+          sx={{ display: "flex", flexWrap: "wrap", mb: 2}}
         >
-          Set Route
-        </Button>
+          <Button
+            type="button"
+            variant="contained"
+            sx={{ width: "170px", mb: 1, mr: 1, fontWeight: 600 }}
+            onClick={() => setSubmitted(true)}
+          >
+            Set Route
+          </Button>
 
-        <Button
-          type="button"
-          variant="contained"
-          color="warning"
-          sx={{ maxWidth: "250px", marginBottom: 1, marginTop: 1 }}
-          onClick={() => {
-            setSubmitted(false);
-            setValues({ from: "", to: "" });
-          }}
-        >
-          Clear Route
-        </Button>
+          <Button
+            type="button"
+            variant="contained"
+            color="secondary"
+            sx={{ width: "170px", mb: 1, mr: 1, fontWeight: 600 }}
+            onClick={() => {
+              setSubmitted(false);
+              setValues({ from: "", to: "" });
+            }}
+          >
+            Clear Route
+          </Button>
+        </Box>
       </Box>
     </>
   );

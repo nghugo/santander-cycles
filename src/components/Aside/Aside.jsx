@@ -1,4 +1,6 @@
 import { React, useState } from "react";
+import Box from "@mui/material/Box";
+
 import StationDetails from "./StationDetails/StationDetails";
 import WeatherDetails from "./WeatherDetails/WeatherDetails";
 
@@ -9,11 +11,17 @@ const Aside = ({
   stationNames,
   getOnInputChange,
   isInvalidInput,
+  cycleLastUpdatedEpoch,
 }) => {
-  // should fetch from App.jsx to avoid waterfall
   return (
-    <>
+    <Box sx={{ mr: { xs: 0, md: 2 } }}>
       <WeatherDetails />
+      <p>
+        Cycle Availabilities Last Refreshed:{" "}
+        {cycleLastUpdatedEpoch
+          ? new Date(parseInt(cycleLastUpdatedEpoch)).toLocaleString()
+          : null}
+      </p>
       <StationDetails
         setSubmitted={setSubmitted}
         values={values}
@@ -22,7 +30,7 @@ const Aside = ({
         getOnInputChange={getOnInputChange}
         isInvalidInput={isInvalidInput}
       />
-    </>
+    </Box>
   );
 };
 

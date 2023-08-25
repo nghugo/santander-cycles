@@ -1,20 +1,28 @@
-import React from 'react';
-import { AppBar, Toolbar, Typography, InputBase, Box } from '@mui/material';
-// import { ClassNames } from '@emotion/react';
+import React from "react";
+import { AppBar, Toolbar, Typography, InputBase, Box } from "@mui/material";
 
 const Header = () => {
-    return (
-        <>
-            <h1>Header</h1>
-            <AppBar position="static">
-            {/* <Toolbar className={classes.toolbar}>
-                <Typography variant="h5" classes={classes.title}>
-                    Santander Cycle Companian
-                </Typography>
-            </Toolbar> */}
-            </AppBar>
-        </>
-    );
-}
+  return (
+    <>
+      <AppBar position="static">
+        <Typography
+          variant="h6"
+          sx={{
+            px: { xs: 1, sm: 2 },
+            py: 1,
+            display: "flex",
+            fontWeight: 600,
+            fontFamily: "RobotoCondensed",
+            color: "inherit",
+            textDecoration: "none",
+            letterSpacing: "0.0075em",
+          }}
+        >
+          Santander Cycles Companion
+        </Typography>
+      </AppBar>
+    </>
+  );
+};
 
 export default Header;
