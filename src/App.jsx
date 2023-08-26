@@ -7,13 +7,12 @@ import { Data } from "@react-google-maps/api";
 import Header from "./components/Header/Header";
 import Aside from "./components/Aside/Aside";
 import Map from "./components/Map/Map";
-import theme from "./styles.js"
+import { theme } from "./styles.js"
 
 
 function App() {
   const [submitted, setSubmitted] = useState(false);
   const [values, setValues] = useState({ from: "", to: "" });
-
   const [stations, setStations] = useState([]);
   const [cycleLastUpdatedEpoch, setCycleLastUpdatedEpoch] = useState(null);
 
@@ -83,7 +82,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box
+      <Box // FlexBody
         sx={{
           minHeight: "100vh",
           display: "flex",
@@ -92,7 +91,7 @@ function App() {
         }}
       >
         <Header />
-        <Box sx={{ m: { xs: 1, sm: 2, flex: 1, position: "relative" } }}>
+        <Box sx={{ m: { xs: 1, sm: 2, flex: 1, position: "relative" } }}>  {/* ContentContainer */}
           <Grid
             container
             style={{ width: "100%", height: "100%", position: "absolute" }}
@@ -101,7 +100,7 @@ function App() {
               <Aside
                 setSubmitted={setSubmitted}
                 values={values}
-                stationNames={stationNamesSorted} // stations.map((station) => station.name)
+                stationNames={stationNamesSorted}
                 setValues={setValues}
                 getOnInputChange={getOnInputChange}
                 isInvalidInput={isInvalidInput}

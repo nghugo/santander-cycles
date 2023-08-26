@@ -1,14 +1,7 @@
 import React from "react";
-import IconButton from "@mui/material/IconButton";
-import EditLocationIcon from "@mui/icons-material/EditLocation";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Autocomplete from "@mui/material/Autocomplete";
+import {TextField, Autocomplete, Typography, Box} from "@mui/material";
 
-import Box from "@mui/material/Box";
-import { Typography } from "@mui/material";
-
-// import { AppBar, Toolbar, Typography, InputBase } from "@mui/material";
+import { ClearRouteButton, SetRouteButton } from "./styles"
 
 function StationNameField({
   label,
@@ -58,41 +51,9 @@ function StationDetails({
           ? new Date(parseInt(cycleLastUpdatedEpoch)).toLocaleString("en-GB")
           : null}
       </Typography>
-
-      <p>...</p>
-      <p>...</p>
-      <p>...</p>
-      <p>...</p>
-      <p>...</p>
-      <p>...</p>
-      <p>...</p>
-      <p>...</p>
-      <p>...</p>
-      <p>...</p>
-      <p>...</p>
-      <p>...</p>
-      <p>...</p>
-      <p>...</p>
-      <p>...</p>
-      <p>...</p>
-      <p>...</p>
-      <p>...</p>
-      <p>...</p>
-      <p>...</p>
-      <p>...</p>
-      <p>...</p>
-      <p>...</p>
-      <p>...</p>
-      <p>...</p>
         
       <Box
         component="form"
-        sx={{
-          "& .MuiTextField-root": { width: "25ch" },
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
         noValidate
         autoComplete="off"
       >
@@ -113,27 +74,19 @@ function StationDetails({
           value={values.to}
         />
         <Box sx={{ display: "flex", flexWrap: "wrap", mb: 2 }}>
-          <Button
+          <SetRouteButton
             type="button"
-            variant="contained"
-            sx={{ width: "170px", mb: 1, mr: 1, fontWeight: 600 }}
             onClick={() => setSubmitted(true)}
           >
             Set Route
-          </Button>
+          </SetRouteButton>
 
-          <Button
+          <ClearRouteButton
             type="button"
-            variant="contained"
-            color="secondary"
-            sx={{ width: "170px", mb: 1, mr: 1, fontWeight: 600 }}
-            onClick={() => {
-              setSubmitted(false);
-              setValues({ from: "", to: "" });
-            }}
+            onClick={() => {setSubmitted(false); setValues({ from: "", to: "" });}}
           >
             Clear Route
-          </Button>
+          </ClearRouteButton>
         </Box>
       </Box>
     </>

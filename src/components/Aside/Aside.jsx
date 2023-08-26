@@ -1,8 +1,8 @@
-import { React, useState } from "react";
-import Box from "@mui/material/Box";
+import { React } from "react";
 
 import StationDetails from "./StationDetails/StationDetails";
 import WeatherDetails from "./WeatherDetails/WeatherDetails";
+import {AsideContent} from "./styles"
 
 const Aside = ({
   setSubmitted,
@@ -14,15 +14,7 @@ const Aside = ({
   cycleLastUpdatedEpoch,
 }) => {
   return (
-    <Box
-      sx={{
-        pr: { xs: 0, md: 2 },
-        position: {md: "absolute"},
-        overflow: {md: "auto"},
-        width: {md: "100%"},
-        height: {md: "100%"},
-      }}
-    >
+    <AsideContent>
       <WeatherDetails />
       <StationDetails
         setSubmitted={setSubmitted}
@@ -33,7 +25,7 @@ const Aside = ({
         isInvalidInput={isInvalidInput}
         cycleLastUpdatedEpoch={cycleLastUpdatedEpoch}
       />
-    </Box>
+    </AsideContent>
   );
 };
 

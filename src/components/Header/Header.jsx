@@ -1,40 +1,13 @@
-import React from "react";
-import { AppBar, Toolbar, Typography, InputBase, Box } from "@mui/material";
-
-import { IconLink } from "./styles";
+import { IconLink, IconGroup, FlexAppBar, HeaderTitle} from "./styles";
 
 const Header = () => {
   return (
     <>
-      <AppBar
-        position="static"
-        sx={{
-          px: { xs: 1, sm: 2 },
-          py: 1,
-          display: "flex",
-          flexDirection: "row",
-        }}
-      >
-        <Typography
-          variant="h6"
-          sx={{
-            fontWeight: 600,
-            fontFamily: "RobotoCondensed",
-            display: "inline",
-          }}
-        >
+      <FlexAppBar>
+        <HeaderTitle>
           Santander Cycles Companion
-        </Typography>
-        <Box
-          sx={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-end",
-            alignItems: "center",
-            mx: 1,
-          }}
-        >
+        </HeaderTitle>
+        <IconGroup>
           <IconLink href="https://github.com/nghugo/santander-cycles">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -71,8 +44,8 @@ const Header = () => {
               />
             </svg>
           </IconLink>
-        </Box>
-      </AppBar>
+        </IconGroup>
+      </FlexAppBar>
     </>
   );
 };
