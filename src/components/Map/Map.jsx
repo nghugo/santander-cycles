@@ -11,8 +11,7 @@ const Map = ({ center }) => {
           width: "100%",
           position: "absolute",
           minHeight: { xs: "80vh", md: 0 },
-          // mb:{xs:20}
-          pb: { xs: 2, md: 0 },
+          pb: { xs: 1, sm: 2, md: 0 },
         }}
       >
         <GoogleMapReact
