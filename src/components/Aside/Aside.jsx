@@ -14,14 +14,16 @@ const Aside = ({
   cycleLastUpdatedEpoch,
 }) => {
   return (
-    <Box sx={{ mr: { xs: 0, md: 2 } }}>
+    <Box
+      sx={{
+        pr: { xs: 0, md: 2 },
+        position: {md: "absolute"},
+        overflow: {md: "auto"},
+        width: {md: "100%"},
+        height: {md: "100%"},
+      }}
+    >
       <WeatherDetails />
-      <p>
-        Cycle Availabilities Last Refreshed:{" "}
-        {cycleLastUpdatedEpoch
-          ? new Date(parseInt(cycleLastUpdatedEpoch)).toLocaleString()
-          : null}
-      </p>
       <StationDetails
         setSubmitted={setSubmitted}
         values={values}
@@ -29,6 +31,7 @@ const Aside = ({
         setValues={setValues}
         getOnInputChange={getOnInputChange}
         isInvalidInput={isInvalidInput}
+        cycleLastUpdatedEpoch={cycleLastUpdatedEpoch}
       />
     </Box>
   );

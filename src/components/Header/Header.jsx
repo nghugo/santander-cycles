@@ -20,6 +20,7 @@ const Header = () => {
         >
           Santander Cycles Companion
         </Typography>
+        <p>asldjfklsdfj</p>
       </AppBar>
     </>
   );

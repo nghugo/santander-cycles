@@ -1,28 +1,14 @@
 import { useState, useEffect } from "react";
 import { CssBaseline, Grid } from "@mui/material";
+import Box from "@mui/material/Box";
+import {ThemeProvider} from "@mui/material/styles";
+import { Data } from "@react-google-maps/api";
 
 import Header from "./components/Header/Header";
 import Aside from "./components/Aside/Aside";
 import Map from "./components/Map/Map";
-import Box from "@mui/material/Box";
-import { Data } from "@react-google-maps/api";
+import theme from "./styles.js"
 
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { lime, purple } from "@mui/material/colors";
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#2196F3",
-    },
-    secondary: {
-      main: "#FF5722",
-    },
-    cardBackground: {
-      main: "#eff6f9",
-    },
-  },
-});
 
 function App() {
   const [submitted, setSubmitted] = useState(false);
@@ -111,7 +97,7 @@ function App() {
             container
             style={{ width: "100%", height: "100%", position: "absolute" }}
           >
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={4} sx={{position: "relative"}}>
               <Aside
                 setSubmitted={setSubmitted}
                 values={values}

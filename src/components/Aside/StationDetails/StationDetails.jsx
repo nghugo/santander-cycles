@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import Autocomplete from "@mui/material/Autocomplete";
 
 import Box from "@mui/material/Box";
+import { Typography } from "@mui/material";
 
 // import { AppBar, Toolbar, Typography, InputBase } from "@mui/material";
 
@@ -30,7 +31,7 @@ function StationNameField({
             {...params}
             label={label}
             error={invalidInput}
-            style={{ width: "100%", m:0 }}
+            style={{ width: "100%", m: 0 }}
             helperText={invalidInput ? "Invalid input" : " "}
           />
         )}
@@ -46,10 +47,44 @@ function StationDetails({
   stationNames,
   getOnInputChange,
   isInvalidInput,
+  cycleLastUpdatedEpoch,
 }) {
   return (
     <>
-      <h1>StationDetails</h1>
+      <Typography variant="h5">Station Details</Typography>
+      <Typography variant="body2" sx={{my: 2}}>
+        Stations last refreshed:{" "}
+        {cycleLastUpdatedEpoch
+          ? new Date(parseInt(cycleLastUpdatedEpoch)).toLocaleString("en-GB")
+          : null}
+      </Typography>
+
+      <p>...</p>
+      <p>...</p>
+      <p>...</p>
+      <p>...</p>
+      <p>...</p>
+      <p>...</p>
+      <p>...</p>
+      <p>...</p>
+      <p>...</p>
+      <p>...</p>
+      <p>...</p>
+      <p>...</p>
+      <p>...</p>
+      <p>...</p>
+      <p>...</p>
+      <p>...</p>
+      <p>...</p>
+      <p>...</p>
+      <p>...</p>
+      <p>...</p>
+      <p>...</p>
+      <p>...</p>
+      <p>...</p>
+      <p>...</p>
+      <p>...</p>
+        
       <Box
         component="form"
         sx={{
@@ -77,9 +112,7 @@ function StationDetails({
           invalidInput={isInvalidInput("to")}
           value={values.to}
         />
-        <Box
-          sx={{ display: "flex", flexWrap: "wrap", mb: 2}}
-        >
+        <Box sx={{ display: "flex", flexWrap: "wrap", mb: 2 }}>
           <Button
             type="button"
             variant="contained"

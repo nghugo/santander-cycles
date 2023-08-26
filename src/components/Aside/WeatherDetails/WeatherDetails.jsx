@@ -2,7 +2,7 @@ import React from 'react';
 
 const WeatherDetails = () => {
     return (
-        <h1>WeatherDetails</h1>
+        <h1>Weather Details</h1>
     );
 }
 

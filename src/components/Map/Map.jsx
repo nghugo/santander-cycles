@@ -33,11 +33,10 @@ const Map = ({ center }) => {
 //         width: "100%",
 //         height: "100%",
 //         backgroundImage: "url('https://cdn.hswstatic.com/gif/maps.jpg')",
-//         outline: "1px solid blue",
+//         // outline: "1px solid blue",
 //         position: "absolute"
 //       }}
 //     >
-//       <p>test</p>
 //     </div>
 //   );
 // };
