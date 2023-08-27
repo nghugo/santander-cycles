@@ -109,10 +109,7 @@ function App() {
               />
             </Grid>
             <Grid item xs={12} md={8} sx={{ position: "relative" }}>
-              <Map
-                center={{ lat: 51.5074, lng: -0.1272 }}
-                stations={stations}
-              />
+              <Map center={{ lat: 51.5074, lng: -0.1272 }} stations={stations} />
             </Grid>
           </Grid>
         </Box>
