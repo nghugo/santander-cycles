@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
 import { CssBaseline, Grid } from "@mui/material";
 import Box from "@mui/material/Box";
-import {ThemeProvider} from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import { Data } from "@react-google-maps/api";
 
 import Header from "./components/Header/Header";
 import Aside from "./components/Aside/Aside";
 import Map from "./components/Map/Map";
-import { theme } from "./styles.js"
-
+import { theme } from "./styles.js";
 
 function App() {
   const [submitted, setSubmitted] = useState(false);
@@ -64,7 +63,9 @@ function App() {
           Array.from(data.getElementsByTagName("station")).map(
             (verboseStation) => ({
               id: getNode("id", verboseStation),
-              name: getNode("name", verboseStation),
+              name: getNode("name", verboseStation), // full name
+              name1: getNode("name", verboseStation).split(", ")[0],
+              name2: getNode("name", verboseStation).split(", ")[1],
               lat: getNode("lat", verboseStation),
               long: getNode("long", verboseStation),
               nbBikes: getNode("nbBikes", verboseStation),
@@ -91,12 +92,12 @@ function App() {
         }}
       >
         <Header />
-        <Box sx={{ m: { xs: 1, sm: 2, flex: 1, position: "relative" } }}>  {/* ContentContainer */}
+        <Box sx={{ m: { xs: 1, sm: 2, flex: 1, position: "relative" } }}>
           <Grid
             container
             style={{ width: "100%", height: "100%", position: "absolute" }}
           >
-            <Grid item xs={12} md={4} sx={{position: "relative"}}>
+            <Grid item xs={12} md={4} sx={{ position: "relative" }}>
               <Aside
                 setSubmitted={setSubmitted}
                 values={values}
@@ -108,7 +109,10 @@ function App() {
               />
             </Grid>
             <Grid item xs={12} md={8} sx={{ position: "relative" }}>
-              <Map center={{ lat: 51.5074, lng: -0.1272 }} />
+              <Map
+                center={{ lat: 51.5074, lng: -0.1272 }}
+                stations={stations}
+              />
             </Grid>
           </Grid>
         </Box>
