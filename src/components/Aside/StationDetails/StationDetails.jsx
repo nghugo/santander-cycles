@@ -1,7 +1,6 @@
 import React from "react";
-import {TextField, Autocomplete, Typography, Box} from "@mui/material";
-
-import { ClearRouteButton, SetRouteButton } from "./styles"
+import { TextField, Autocomplete, Typography, Box } from "@mui/material";
+import Button from "@mui/material/Button";
 
 function StationNameField({
   label,
@@ -45,18 +44,14 @@ function StationDetails({
   return (
     <>
       <Typography variant="h5">Station Details</Typography>
-      <Typography variant="body2" sx={{my: 2}}>
+      <Typography variant="body2" sx={{ my: 2 }}>
         Stations last refreshed:{" "}
         {cycleLastUpdatedEpoch
           ? new Date(parseInt(cycleLastUpdatedEpoch)).toLocaleString("en-GB")
           : null}
       </Typography>
-        
-      <Box
-        component="form"
-        noValidate
-        autoComplete="off"
-      >
+
+      <Box component="form" noValidate autoComplete="off">
         <StationNameField
           label="From"
           id="from"
@@ -74,19 +69,27 @@ function StationDetails({
           value={values.to}
         />
         <Box sx={{ display: "flex", flexWrap: "wrap", mb: 2 }}>
-          <SetRouteButton
+          <Button
             type="button"
             onClick={() => setSubmitted(true)}
+            variant="contained"
+            sx={{ width: "170px", mb: 1, mr: 1, fontWeight: 600 }}
           >
             Set Route
-          </SetRouteButton>
+          </Button>
 
-          <ClearRouteButton
+          <Button
             type="button"
-            onClick={() => {setSubmitted(false); setValues({ from: "", to: "" });}}
+            onClick={() => {
+              setSubmitted(false);
+              setValues({ from: "", to: "" });
+            }}
+            variant="contained"
+            color="secondary"
+            sx={{ width: "170px", mb: 1, mr: 1, fontWeight: 600 }}
           >
             Clear Route
-          </ClearRouteButton>
+          </Button>
         </Box>
       </Box>
     </>
