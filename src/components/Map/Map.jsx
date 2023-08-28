@@ -2,13 +2,14 @@ import { React, useState, useRef } from "react";
 import GoogleMapReact from "google-map-react";
 import useSupercluster from "use-supercluster";
 
-import { MapContent, MarkerContainer, ClusterContainer } from "./styles";
+import { MapContent, MarkerContainer, ClusterContainer } from "./mapStyles";
 import { Paper, Typography } from "@mui/material";
 
 import PopoverMarker from "./PopoverMarker";
+import { ClusterElement, ClusterText } from "./Cluster";
 
 const Map = ({ stations }) => {
-  const mapRef = useRef();
+  const mapref = useRef();
   const [bounds, setBounds] = useState(null);
   const [zoom, setZoom] = useState(12);
 
@@ -36,8 +37,6 @@ const Map = ({ stations }) => {
     options: { radius: 75, maxZoom: 20 },
   });
 
-  console.log(clusters);
-
   return (
     <MapContent>
       <GoogleMapReact
@@ -46,7 +45,8 @@ const Map = ({ stations }) => {
         defaultZoom={12}
         yesIWantToUseGoogleMapApiInternals
         onGoogleApiLoaded={({ map }) => {
-          mapRef.current = map;
+          mapref.current = map;
+          map.setOptions({ clickableIcons: false });
         }}
         onChange={({ zoom, bounds }) => {
           setZoom(zoom);
@@ -60,49 +60,28 @@ const Map = ({ stations }) => {
       >
         {clusters.map((cluster, index) => {
           const [lng, lat] = cluster.geometry.coordinates;
-          const { cluster: isCluster, point_count: pointCount } =
+          const { cluster: isCluster, point_count: pointcount } =
             cluster.properties;
 
           if (isCluster) {
             return (
               <ClusterContainer lat={lat} lng={lng} key={index}>
-                <div
-                  style={{
-                    outline: "1px solid white",
-                    width: `${30 + (pointCount / points.length) * 30}px`,
-                    height: `${30 + (pointCount / points.length) * 30}px`,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderRadius: "100%",
-                    backgroundColor: "#1976D2",
-                    cursor: "pointer",
-                    zIndex: "1" // one level higher than regular elements
-                  }}
-                  onClick={(event) => {
-                    event.stopPropagation(); // do not propagate to google maps's santander cycle button
-                    const expansionZoom = Math.min(
-                      supercluster.getClusterExpansionZoom(cluster.id),20
-                    );
-                    mapRef.current.setZoom(expansionZoom);
-                    mapRef.current.panTo({ lat: lat, lng: lng });
-                  }}
+                <ClusterElement
+                  pointcount={pointcount}
+                  pointslength={points.length}
+                  mapref={mapref}
+                  supercluster={supercluster}
+                  clusterid={cluster.id}
+                  lat={lat}
+                  lng={lng}
                 >
-                  <p
-                    style={{
-                      margin: 0,
-                      color: "white",
-                      fontWeight: "500",
-                    }}
-                  >
-                    {pointCount}
-                  </p>
-                </div>
+                  <ClusterText>{pointcount}</ClusterText>
+                </ClusterElement>
               </ClusterContainer>
             );
           }
 
-          // for the following, isCluster===false
+          // case: isCluster===false
           return (
             <MarkerContainer lat={lat} lng={lng} key={index}>
               {/* cluster.properties.id */}
