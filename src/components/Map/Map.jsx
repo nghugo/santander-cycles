@@ -4,8 +4,10 @@ import GoogleMapReact from "google-map-react";
 import { MapContent } from "./styles";
 import { Paper, Typography } from "@mui/material";
 
-const Marker = (props) => {
-  return <div>{props.children}</div>;
+import PopoverMarker from "./PopoverMarker";
+
+const MarkerContainer = (props) => {
+  return <div>{props.children}</div>; // to remove props from container https://github.com/google-map-react/google-map-react/issues/583
 };
 
 const Map = ({ center, stations }) => {
@@ -17,16 +19,16 @@ const Map = ({ center, stations }) => {
         defaultZoom={11.6}
       >
         {stations.map((station) => (
-          <Marker
+          <MarkerContainer
             lat={Number(station.lat)}
             lng={Number(station.long)}
             key={station.id}
           >
-            <div
+            <div  // to keep marker centered
               style={{
                 width: "50px",
                 height: "50px",
-                top: "-50px",
+                top: "-30px",  // -50px, but +20px to account for 20px paddingBottom of PopoverMarker
                 left: "-25px",
                 position: "relative",
                 bottom: "0",
@@ -34,19 +36,24 @@ const Map = ({ center, stations }) => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "end",
-                outline: "1px solid red",
               }}
             >
-              <p
-                style={{
-                  outline: "1px solid blue",
-                  margin: 0,
+              {/* <img width="20" src="src/assets/images/bike_pin.png"></img> */}
+              <PopoverMarker
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "center",
+                }}
+                transformOrigin={{
+                  vertical: "bottom",
+                  horizontal: "center",
                 }}
               >
-                V
-              </p>
+                <img width="20" src="src/assets/images/bike_pin.png"></img>
+              </PopoverMarker>
+
             </div>
-          </Marker>
+          </MarkerContainer>
         ))}
 
         {/* {stations.length
