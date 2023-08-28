@@ -44,7 +44,7 @@ function StationDetails({
   return (
     <>
       <Typography variant="h5">Station Details</Typography>
-      <Typography variant="body2" sx={{ my: 2 }}>
+      <Typography variant="muted">
         Stations last refreshed:{" "}
         {cycleLastUpdatedEpoch
           ? new Date(parseInt(cycleLastUpdatedEpoch)).toLocaleString("en-GB")

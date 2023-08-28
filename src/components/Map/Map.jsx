@@ -49,16 +49,7 @@ const Map = ({ center, stations }) => {
                   horizontal: "center",
                 }}
               >
-                <img width="20" src="src/assets/images/bike_pin.png"></img>
-              </PopoverMarker>
-
-            </div>
-          </MarkerContainer>
-        ))}
-
-        {/* {stations.length
-          ? stations.map((station) => (
-              <Paper
+                <Paper
                 elevation={3}
                 sx={{ px: 1, py: 0.2, maxWidth: "155px" }}
                 lat={Number(station.lat)}
@@ -79,9 +70,10 @@ const Map = ({ center, stations }) => {
                   </>
                 }
               </Paper>
-            ))
-          : null}
-        ; */}
+              </PopoverMarker>
+            </div>
+          </MarkerContainer>
+        ))}
       </GoogleMapReact>
     </MapContent>
   );

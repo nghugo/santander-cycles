@@ -24,18 +24,15 @@ export default function PopoverMarker(props) {
         aria-describedby={id}
         onClick={handleClick}
         style={{
-        //   backgroundColor: "red",
           cursor: "pointer",
           outline: "1px solid red",
-          
+          display: "flex",
+          justifyContent: "center",
           padding: "5px",
           paddingBottom: "20px",
-
-          display: "flex",
-          justifyContent: "center"
         }}
       >
-        {props.children}
+        <img width="20" src="src/assets/images/bike_pin.png"></img>
       </div>
       <Popover
         id={id}
@@ -45,7 +42,8 @@ export default function PopoverMarker(props) {
         anchorOrigin={props.anchorOrigin}
         transformOrigin={props.transformOrigin}
       >
-        <Typography sx={{ p: 2 }}>The content of the Popover.</Typography>
+        {/* <Typography sx={{ p: 2 }}>The content of the Popover.</Typography> */}
+        {props.children}
       </Popover>
     </>
   );
