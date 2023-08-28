@@ -5,6 +5,24 @@ import Button from "@mui/material/Button";
 
 export default function PopoverMarker(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [startX, setStartX] = React.useState(null);
+  const [startY, setStartY] = React.useState(null);
+  
+  // separate mouse up vs down to distinguish between click vs drag
+  const DELTA = 6;
+
+  const handleMouseDown = (event) => {
+    setStartX(event.pageX);
+    setStartY(event.pageY);
+  }
+
+  const handleMouseUp = (event) => {
+    const diffX = Math.abs(event.pageX - startX);
+    const diffY = Math.abs(event.pageY - startY);
+    if (diffX < DELTA && diffY < DELTA) {
+      handleClick(event)
+    }
+  }
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -22,14 +40,15 @@ export default function PopoverMarker(props) {
     <>
       <div
         aria-describedby={id}
-        onClick={handleClick}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
         style={{
           cursor: "pointer",
-          outline: "1px solid red",
           display: "flex",
           justifyContent: "center",
           padding: "5px",
           paddingBottom: "20px",
+          zIndex: "2" // one level higher than ClusterContainer since you can manually zoom in
         }}
       >
         <img width="20" src="src/assets/images/bike_pin.png"></img>
@@ -39,10 +58,15 @@ export default function PopoverMarker(props) {
         open={open}
         anchorEl={anchorEl}
         onClose={handleClose}
-        anchorOrigin={props.anchorOrigin}
-        transformOrigin={props.transformOrigin}
+        anchorOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+          transformOrigin={{
+            vertical: "bottom",
+            horizontal: "center",
+          }}
       >
-        {/* <Typography sx={{ p: 2 }}>The content of the Popover.</Typography> */}
         {props.children}
       </Popover>
     </>

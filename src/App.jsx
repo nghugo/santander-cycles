@@ -63,6 +63,7 @@ function App() {
           Array.from(data.getElementsByTagName("station")).map(
             (verboseStation) => ({
               id: getNode("id", verboseStation),
+              key: getNode("id", verboseStation),
               name: getNode("name", verboseStation), // full name
               name1: getNode("name", verboseStation).split(", ")[0],
               name2: getNode("name", verboseStation).split(", ")[1],

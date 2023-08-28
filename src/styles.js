@@ -2,6 +2,15 @@ import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
 export const theme = responsiveFontSizes(
   createTheme({
+    components: {
+      MuiCssBaseline: {
+        styleOverrides: {
+          body: {
+            scrollbarGutter: "stable both-edges",
+          }
+        }
+      }
+    },
     palette: {
       primary: {
         main: "#2196F3",
@@ -21,16 +30,16 @@ export const theme = responsiveFontSizes(
       subtitle2: {
         fontSize: 14,
       },
+      body2: {
+        fontSize: 13,
+        display: "block",
+      },
       muted: {
         fontSize: 16,
         color: "slategrey",
         display: "block",
         marginBottom: "16px",
         marginTop: "16px",
-      },
-      body2: {
-        fontSize: 13,
-        display: "block",
       },
       muted2: {
         fontSize: 12,
