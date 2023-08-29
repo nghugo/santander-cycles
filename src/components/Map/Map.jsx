@@ -44,7 +44,7 @@ import { ClusterElement, ClusterText } from "./Cluster";
     ? console.warn(p + " only loads once. Ignoring:", g)
     : (d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)));
 })({
-  key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+  // key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
   v: "weekly",
 });
 
@@ -77,11 +77,46 @@ const Map = ({ stations }) => {
     options: { radius: 150, maxZoom: 20 },
   });
 
+  useEffect(() => {  // TO IMPLEMENT: abstract into individual functions
+    if (mapref.current) {
+      const polylineOptionsActual = new google.maps.Polyline({
+        strokeColor: "#FF0000",
+        strokeOpacity: 1.0,
+        strokeWeight: 3,
+      });
+
+      const directionsService = new google.maps.DirectionsService();
+      const directionsRenderer = new google.maps.DirectionsRenderer({
+        suppressBicyclingLayer: true,
+        polylineOptions: polylineOptionsActual,
+      });
+      directionsRenderer.setMap(mapref.current);
+      
+      const origin = { lat: 51.478207, lng: -0.232061 }; // TO IMPLEMENT: Grab "from" state to match station
+      const destination = { lat: 51.556532, lng: 0.027395 }; // TO IMPLEMENT: Grab "to" state to match station
+
+      directionsService.route(
+        {
+          origin: origin,
+          destination: destination,
+          travelMode: google.maps.TravelMode.BICYCLING,
+        },
+        (result, status) => {
+          if (status === google.maps.DirectionsStatus.OK) {
+            directionsRenderer.setDirections(result);
+          } else {
+            console.error(`error fetching directions ${result}`);
+          }
+        }
+      );
+    }
+  }, []);  // TO IMPLEMENT: Set as [from, to, inputsSubmittedAndValid]
+
   return (
     <MapContent>
       <GoogleMapReact
         // bootstrapURLKeys={{ key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY }}
-        defaultCenter={{ lat: 51.509865, lng: -0.118092 }}
+        defaultCenter={{ lat: 51.509865, lng: -0.118092 }}  // hard-coded london center coordinates
         defaultZoom={12}
         yesIWantToUseGoogleMapApiInternals
         onGoogleApiLoaded={({ map }) => {
@@ -90,36 +125,6 @@ const Map = ({ stations }) => {
             clickableIcons: false,
             fullscreenControl: false,
           });
-
-          const polylineOptionsActual = new google.maps.Polyline({
-            strokeColor: "#FF0000",
-            strokeOpacity: 1.0,
-            strokeWeight: 3,
-          });
-
-          const directionsService = new google.maps.DirectionsService();
-          const directionsRenderer = new google.maps.DirectionsRenderer({
-            suppressBicyclingLayer: true,
-            polylineOptions: polylineOptionsActual,
-          });
-          directionsRenderer.setMap(map);
-          const origin = { lat: 51.478207, lng: -0.232061 };
-          const destination = { lat: 51.556532, lng: 0.027395 };
-
-          directionsService.route(
-            {
-              origin: origin,
-              destination: destination,
-              travelMode: google.maps.TravelMode.BICYCLING,
-            },
-            (result, status) => {
-              if (status === google.maps.DirectionsStatus.OK) {
-                directionsRenderer.setDirections(result);
-              } else {
-                console.error(`error fetching directions ${result}`);
-              }
-            }
-          );
         }}
         onChange={({ zoom, bounds }) => {
           setZoom(zoom);
@@ -131,11 +136,6 @@ const Map = ({ stations }) => {
           ]);
         }}
       >
-        {/* <DirectionsRenderer
-            map={mapref}
-            origin={{ lat: 51.478207, lng: -0.232061, }}
-            destination={{ lat: 51.556532, lng: 0.027395 }}
-          /> */}
         {clusters.map((cluster, index) => {
           const [lng, lat] = cluster.geometry.coordinates;
           const { cluster: isCluster, point_count: pointcount } =
