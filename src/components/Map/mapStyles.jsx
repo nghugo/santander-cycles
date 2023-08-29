@@ -6,7 +6,7 @@ export const MapContent = (props) => (
       height: "100%",
       width: "100%",
       position: "absolute",
-      minHeight: { xs: "80vh", md: 0 },
+      minHeight: { xs: "95vh", md: 0 },
       pb: { xs: 1, sm: 2, md: 0 },
     }}
   >
@@ -16,7 +16,7 @@ export const MapContent = (props) => (
 
 export const MarkerContainer = (props) => {
   // exclude {...props} to remove props from container https://github.com/google-map-react/google-map-react/issues/583
-  // bottom-centered using top, left, 
+  // bottom-centered using top, left,
   return (
     <div
       style={{
@@ -48,6 +48,29 @@ export const ClusterContainer = (props) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+      }}
+    >
+      {props.children}
+    </div>
+  );
+};
+
+export const RouteBannerContainer = (props) => {
+  return (
+    <div
+      style={{
+        position: "absolute",
+        zIndex: 3, // one level higher than PopoverMarker (highest map element)
+        width: "260px",
+        left: 'calc(-130px + 50%)',  // position in middle, accounting for width
+        top: "10px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "white",
+        paddingTop: "3px",
+        paddingBottom: "3px",
+        borderRadius: "30px",
       }}
     >
       {props.children}

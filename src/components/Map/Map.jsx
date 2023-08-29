@@ -2,7 +2,7 @@ import { React, useState, useEffect, useRef } from "react";
 import GoogleMapReact from "google-map-react";
 import useSupercluster from "use-supercluster";
 
-import { MapContent, MarkerContainer, ClusterContainer } from "./mapStyles";
+import { MapContent, MarkerContainer, ClusterContainer, RouteBannerContainer } from "./mapStyles";
 import { Paper, Typography } from "@mui/material";
 
 import PopoverMarker from "./PopoverMarker";
@@ -77,7 +77,8 @@ const Map = ({ stations }) => {
     options: { radius: 150, maxZoom: 20 },
   });
 
-  useEffect(() => {  // TO IMPLEMENT: abstract into individual functions
+  useEffect(() => {
+    // Get Route and associated dist, time
     if (mapref.current) {
       const polylineOptionsActual = new google.maps.Polyline({
         strokeColor: "#FF0000",
@@ -91,7 +92,7 @@ const Map = ({ stations }) => {
         polylineOptions: polylineOptionsActual,
       });
       directionsRenderer.setMap(mapref.current);
-      
+
       const origin = { lat: 51.478207, lng: -0.232061 }; // TO IMPLEMENT: Grab "from" state to match station
       const destination = { lat: 51.556532, lng: 0.027395 }; // TO IMPLEMENT: Grab "to" state to match station
 
@@ -104,19 +105,38 @@ const Map = ({ stations }) => {
         (result, status) => {
           if (status === google.maps.DirectionsStatus.OK) {
             directionsRenderer.setDirections(result);
+            const directionsData = response.routes[0].legs[0];
+            if (!directionsData) {
+              console.error("error fetching route distance and duration");
+            } else {
+              console.log(`Cycling distance is ${directionsData.distance.text}, and duration is ${directionsData.duration.text}`)
+            }
           } else {
             console.error(`error fetching directions ${result}`);
           }
         }
       );
     }
-  }, []);  // TO IMPLEMENT: Set as [from, to, inputsSubmittedAndValid]
+  }, []); // TO IMPLEMENT: Set as [from, to, inputsSubmittedAndValid]
 
   return (
     <MapContent>
+
+      {/* test code to float div over map */}
+      {/* use inputsSubmittedAndValid derived state to display conditionally */}
+      <RouteBannerContainer
+      >
+        <div style={{
+          // textAlign: "center",
+        }}>
+          <Typography variant="body3">Route Duration: XX hours, XX minutes</Typography>
+          <Typography variant="body3">Route Distance: YY.Y km</Typography>
+        </div>
+      </RouteBannerContainer>
+
       <GoogleMapReact
         // bootstrapURLKeys={{ key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY }}
-        defaultCenter={{ lat: 51.509865, lng: -0.118092 }}  // hard-coded london center coordinates
+        defaultCenter={{ lat: 51.509865, lng: -0.118092 }} // hard-coded london center coordinates
         defaultZoom={12}
         yesIWantToUseGoogleMapApiInternals
         onGoogleApiLoaded={({ map }) => {

@@ -5,6 +5,15 @@ export const IconLink = styled("a")({
   marginLeft: "8px",
   display: "flex",
   alignItems: "center",
+  "& svg": {
+    transition: "transform 0.1s ease-out"
+  },
+  "&:hover svg path": {
+    fill: "#FFEB3B",
+  },
+  "&:hover svg": {
+    transform: "translate(0, -3px)"
+  }
 });
 
 export const IconGroup = styled("div")({
