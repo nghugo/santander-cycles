@@ -53,7 +53,7 @@ function StationDetails({
 
       <Box component="form" noValidate autoComplete="off">
         <StationNameField
-          label="From"
+          label="Origin (A)"
           id="from"
           stationNames={stationNames}
           onInputChange={getOnInputChange("from")}
@@ -61,7 +61,7 @@ function StationDetails({
           value={values.from}
         />
         <StationNameField
-          label="To"
+          label="Destination (B)"
           id="to"
           stationNames={stationNames}
           onInputChange={getOnInputChange("to")}

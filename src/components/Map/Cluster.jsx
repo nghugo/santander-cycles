@@ -39,7 +39,7 @@ export function ClusterElement(props) {
         justifyContent: "center",
         alignItems: "center",
         borderRadius: "100%",
-        backgroundColor: "#1976D2",
+        backgroundColor: "rgba(25,118,210, 0.9)",
         cursor: "pointer",
         zIndex: "1", // one level higher than regular elements
       }}
