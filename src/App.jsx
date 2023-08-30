@@ -10,7 +10,7 @@ import { theme } from "./styles.js";
 
 function App() {
   const [submitted, setSubmitted] = useState(false);
-  const [values, setValues] = useState({ from: "", to: "" }); // input values
+  const [values, setValues] = useState({ origin: "", destination: "" }); // input values
   const [stations, setStations] = useState([]);
   const [cycleLastUpdatedEpoch, setCycleLastUpdatedEpoch] = useState(null);
 
@@ -18,8 +18,8 @@ function App() {
 
   const routeSubmittedAndValid =
     submitted &&
-    stationNamesSorted.includes(values["from"]) &&
-    stationNamesSorted.includes(values["to"]);
+    stationNamesSorted.includes(values["origin"]) &&
+    stationNamesSorted.includes(values["destination"]);
 
   const getOnInputChange = (name) => {
     return (e, value) => {

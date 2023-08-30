@@ -54,19 +54,19 @@ function StationDetails({
       <Box component="form" noValidate autoComplete="off">
         <StationNameField
           label="Origin (A)"
-          id="from"
+          id="origin"
           stationNames={stationNames}
-          onInputChange={getOnInputChange("from")}
-          invalidInput={isInvalidInput("from")}
-          value={values.from}
+          onInputChange={getOnInputChange("origin")}
+          invalidInput={isInvalidInput("origin")}
+          value={values.origin}
         />
         <StationNameField
           label="Destination (B)"
-          id="to"
+          id="destination"
           stationNames={stationNames}
-          onInputChange={getOnInputChange("to")}
-          invalidInput={isInvalidInput("to")}
-          value={values.to}
+          onInputChange={getOnInputChange("destination")}
+          invalidInput={isInvalidInput("destination")}
+          value={values.destination}
         />
         <Box sx={{ display: "flex", flexWrap: "wrap", mb: 2 }}>
           <Button

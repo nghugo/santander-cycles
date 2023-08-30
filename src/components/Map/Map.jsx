@@ -49,7 +49,7 @@ import { ClusterElement, ClusterText } from "./Cluster";
     ? console.warn(p + " only loads once. Ignoring:", g)
     : (d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)));
 })({
-  key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+  // key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
   v: "weekly",
 });
 
@@ -121,8 +121,8 @@ const Map = ({ stations, routeSubmittedAndValid, values }) => {
         });
       }
       
-      const origin = getNameMatchingLatLng(values["from"], stations);
-      const destination = getNameMatchingLatLng(values["to"], stations);
+      const origin = getNameMatchingLatLng(values["origin"], stations);
+      const destination = getNameMatchingLatLng(values["destination"], stations);
 
       directionsRenderer.current.setMap(mapref.current);
       directionsService.current.route(
