@@ -58,7 +58,7 @@ function StationDetails({
           stationNames={stationNames}
           onInputChange={getOnInputChange("origin")}
           invalidInput={isInvalidInput("origin")}
-          value={values.origin}
+          value={values.origin || ""}
         />
         <StationNameField
           label="Destination (B)"
@@ -66,7 +66,7 @@ function StationDetails({
           stationNames={stationNames}
           onInputChange={getOnInputChange("destination")}
           invalidInput={isInvalidInput("destination")}
-          value={values.destination}
+          value={values.destination || ""}
         />
         <Box sx={{ display: "flex", flexWrap: "wrap", mb: 2 }}>
           <Button
