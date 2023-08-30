@@ -48,7 +48,7 @@ function StationDetails({
         Stations last refreshed:{" "}
         {cycleLastUpdatedEpoch
           ? new Date(parseInt(cycleLastUpdatedEpoch)).toLocaleString("en-GB")
-          : null}
+          : "N/A"}
       </Typography>
 
       <Box component="form" noValidate autoComplete="off">

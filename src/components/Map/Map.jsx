@@ -2,8 +2,15 @@ import { React, useState, useEffect, useRef } from "react";
 import GoogleMapReact from "google-map-react";
 import useSupercluster from "use-supercluster";
 
-import { MapContent, MarkerContainer, ClusterContainer, RouteBannerContainer } from "./mapStyles";
-import { Paper, Typography } from "@mui/material";
+import {
+  MapContent,
+  MarkerContainer,
+  ClusterContainer,
+  RouteBannerContainer,
+} from "./mapStyles";
+import { Paper, Typography, Stack, CircularProgress} from "@mui/material";
+
+// import CircularProgress from "@mui/material/CircularProgress";
 
 import PopoverMarker from "./PopoverMarker";
 import { ClusterElement, ClusterText } from "./Cluster";
@@ -109,7 +116,9 @@ const Map = ({ stations }) => {
             if (!directionsData) {
               console.error("error fetching route distance and duration");
             } else {
-              console.log(`Cycling distance is ${directionsData.distance.text}, and duration is ${directionsData.duration.text}`)
+              console.log(
+                `Cycling distance is ${directionsData.distance.text}, and duration is ${directionsData.duration.text}`
+              );
             }
           } else {
             console.error(`error fetching directions ${result}`);
@@ -121,18 +130,37 @@ const Map = ({ stations }) => {
 
   return (
     <MapContent>
-
       {/* test code to float div over map */}
       {/* use inputsSubmittedAndValid derived state to display conditionally */}
-      <RouteBannerContainer
-      >
-        <div style={{
-          // textAlign: "center",
-        }}>
-          <Typography variant="body3">Route Duration: XX hours, XX minutes</Typography>
+      <RouteBannerContainer>
+        <div
+          style={
+            {
+              // textAlign: "center",
+            }
+          }
+        >
+          <Typography variant="body3">
+            Route Duration: XX hours, XX minutes
+          </Typography>
           <Typography variant="body3">Route Distance: YY.Y km</Typography>
         </div>
       </RouteBannerContainer>
+      
+      {/* Rotating roading circle when map is still loading */}
+      {!mapref.current && <CircularProgress
+        sx={{
+          height: "100%",
+          width: "100%",
+          position: "absolute",
+          zIndex: "999",
+          width: "50px",
+          height: "50px",
+          top: "50%",
+          left: 'calc(-25px + 50%)',  // position in middle, accounting for width
+          pointerEvents: "none",
+        }}
+      />}
 
       <GoogleMapReact
         // bootstrapURLKeys={{ key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY }}
