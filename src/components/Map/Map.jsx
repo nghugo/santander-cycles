@@ -8,9 +8,7 @@ import {
   ClusterContainer,
   RouteBannerContainer,
 } from "./mapStyles";
-import { Paper, Typography, Stack, CircularProgress} from "@mui/material";
-
-// import CircularProgress from "@mui/material/CircularProgress";
+import { Paper, Typography, CircularProgress} from "@mui/material";
 
 import PopoverMarker from "./PopoverMarker";
 import { ClusterElement, ClusterText } from "./Cluster";
@@ -59,6 +57,7 @@ const Map = ({ stations }) => {
   const mapref = useRef();
   const [bounds, setBounds] = useState(null);
   const [zoom, setZoom] = useState(12);
+  // const [routeDetails, setRouteDetails] = useState({});
 
   const points = stations.map((station) => ({
     type: "Feature",
@@ -150,8 +149,6 @@ const Map = ({ stations }) => {
       {/* Rotating roading circle when map is still loading */}
       {!mapref.current && <CircularProgress
         sx={{
-          height: "100%",
-          width: "100%",
           position: "absolute",
           zIndex: "999",
           width: "50px",
