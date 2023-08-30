@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { CssBaseline, Grid } from "@mui/material";
 import Box from "@mui/material/Box";
 import { ThemeProvider } from "@mui/material/styles";
-import { Data } from "@react-google-maps/api";
 
 import Header from "./components/Header/Header";
 import Aside from "./components/Aside/Aside";

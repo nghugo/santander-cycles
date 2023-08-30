@@ -49,19 +49,21 @@ import { ClusterElement, ClusterText } from "./Cluster";
     ? console.warn(p + " only loads once. Ignoring:", g)
     : (d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)));
 })({
-  // key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+  key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
   v: "weekly",
 });
 
 const Map = ({ stations, routeSubmittedAndValid, values }) => {
   const mapref = useRef();
+  const directionsService = useRef();
+  const directionsRenderer = useRef();
   const [bounds, setBounds] = useState(null);
   const [zoom, setZoom] = useState(12);
 
   // the last set route details, but is not reset on clicking CLEAR ROUTE button
   const [latestRouteDetails, setLatestRouteDetails] = useState({
     duration: null,
-    distance: null,
+    distanceMeters: null,
   });
 
   const points = stations.map((station) => ({
@@ -88,37 +90,42 @@ const Map = ({ stations, routeSubmittedAndValid, values }) => {
     options: { radius: 150, maxZoom: 20 },
   });
 
-  // function getNameMatchingStation(value, stations) {
-  //   for (let station of stations) {
-  //     if (value === station.name) {
-  //       return station;
-  //     }
-  //   }
-  //   return null;
-  // }
-  // getNameMatchingStation(values["from"], stations);
-  // getNameMatchingStation(values["to"], stations);
+  function getNameMatchingLatLng(value, stations) {
+    for (let station of stations) {
+      if (value === station.name) {
+        return { lat: Number(station.lat), lng: Number(station.long) };
+      }
+    }
+    return { lat: null, lng: null };
+  }
 
   useEffect(() => {
     // Get Route and associated dist, time
-    if (mapref.current) {
+    if (mapref.current && routeSubmittedAndValid) {
+      console.log(' * * * Called Google Maps Directions API * * *')
       const polylineOptionsActual = new google.maps.Polyline({
         strokeColor: "#FF0000",
         strokeOpacity: 1.0,
         strokeWeight: 3,
       });
 
-      const directionsService = new google.maps.DirectionsService();
-      const directionsRenderer = new google.maps.DirectionsRenderer({
-        suppressBicyclingLayer: true,
-        polylineOptions: polylineOptionsActual,
-      });
-      directionsRenderer.setMap(mapref.current);
+      // Only one instance of directionsService and directionsRenderer, enabling deletion of previous route 
+      // https://stackoverflow.com/questions/32949713/google-map-remove-previous-route-and-draw-a-new-route
+      if (!directionsService.current) {
+        directionsService.current = new google.maps.DirectionsService();
+      }
+      if (!directionsRenderer.current) {
+        directionsRenderer.current = new google.maps.DirectionsRenderer({
+          suppressBicyclingLayer: true,
+          polylineOptions: polylineOptionsActual,
+        });
+      }
+      
+      const origin = getNameMatchingLatLng(values["from"], stations);
+      const destination = getNameMatchingLatLng(values["to"], stations);
 
-      const origin = { lat: 51.478207, lng: -0.232061 }; // TO IMPLEMENT: Grab "from" state to match station
-      const destination = { lat: 51.556532, lng: 0.027395 }; // TO IMPLEMENT: Grab "to" state to match station
-
-      directionsService.route(
+      directionsRenderer.current.setMap(mapref.current);
+      directionsService.current.route(
         {
           origin: origin,
           destination: destination,
@@ -126,15 +133,17 @@ const Map = ({ stations, routeSubmittedAndValid, values }) => {
         },
         (response, status) => {
           if (status === google.maps.DirectionsStatus.OK) {
-            directionsRenderer.setDirections(response);
+            // render route on map
+            directionsRenderer.current.setDirections(response);
+            // extract route distance and duration
             const directionsData = response.routes[0].legs[0];
             if (!directionsData) {
               console.error("error fetching route distance and duration");
             } else {
-              setLatestRouteDetails({distance: directionsData.distance.text, duration: directionsData.duration.text})
-              console.log(
-                `Cycling distance is ${directionsData.distance.text}, and duration is ${directionsData.duration.text}`
-              );
+              setLatestRouteDetails({
+                distanceMeters: directionsData.distance.value,
+                duration: directionsData.duration.text,
+              });
             }
           } else {
             console.error(`error fetching directions ${response}`);
@@ -142,7 +151,12 @@ const Map = ({ stations, routeSubmittedAndValid, values }) => {
         }
       );
     }
-  }, []); // TO IMPLEMENT: Set as [from, to, inputsSubmittedAndValid]
+    return () => {
+      if (directionsRenderer.current) {
+        directionsRenderer.current.setDirections({routes: []})
+      }
+    }; // remove previous route
+  }, [routeSubmittedAndValid, values]);
 
   return (
     <MapContent>
@@ -153,9 +167,29 @@ const Map = ({ stations, routeSubmittedAndValid, values }) => {
         <RouteBannerContainer>
           <div>
             <Typography variant="body3">
-              Route Duration: {latestRouteDetails.duration ? latestRouteDetails.duration: "N/A"}
+              Route Duration:{" "}
+              {latestRouteDetails.duration
+                ? latestRouteDetails.duration
+                : "N/A"}
             </Typography>
-            <Typography variant="body3">Route Distance:  {latestRouteDetails.distance ? latestRouteDetails.distance : "N/A"}</Typography>
+            <Typography variant="body3">
+              Route Distance:{" "}
+              {latestRouteDetails.distanceMeters
+                ? `${
+                    Math.round(
+                      (latestRouteDetails.distanceMeters * 0.001 +
+                        Number.EPSILON) *
+                        100
+                    ) / 100
+                  } km (${
+                    Math.round(
+                      (latestRouteDetails.distanceMeters * 0.000621371 +
+                        Number.EPSILON) *
+                        100
+                    ) / 100
+                  } mi)`
+                : "N/A"}
+            </Typography>
           </div>
         </RouteBannerContainer>
       )}
@@ -176,7 +210,7 @@ const Map = ({ stations, routeSubmittedAndValid, values }) => {
       )}
 
       <GoogleMapReact
-        // bootstrapURLKeys={{ key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY }}
+        // bootstrapURLKeys={{ key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY }} // not needed when key is provided in google maps import
         defaultCenter={{ lat: 51.509865, lng: -0.118092 }} // hard-coded london center coordinates
         defaultZoom={12}
         yesIWantToUseGoogleMapApiInternals
