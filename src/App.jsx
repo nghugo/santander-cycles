@@ -11,17 +11,23 @@ import { theme } from "./styles.js";
 
 function App() {
   const [submitted, setSubmitted] = useState(false);
-  const [values, setValues] = useState({ from: "", to: "" });
+  const [values, setValues] = useState({ from: "", to: "" }); // input values
   const [stations, setStations] = useState([]);
   const [cycleLastUpdatedEpoch, setCycleLastUpdatedEpoch] = useState(null);
+
+  const stationNamesSorted = stations.map((station) => station.name).sort();
+
+  const routeSubmittedAndValid =
+    submitted &&
+    stationNamesSorted.includes(values["from"]) &&
+    stationNamesSorted.includes(values["to"]);
+
 
   const getOnInputChange = (name) => {
     return (e, value) => {
       setValues({ ...values, [name]: value });
     };
   };
-
-  const stationNamesSorted = stations.map((station) => station.name).sort();
 
   const isInvalidInput = (name) => {
     return submitted && !stationNamesSorted.includes(values[name]); //
@@ -110,7 +116,7 @@ function App() {
               />
             </Grid>
             <Grid item xs={12} md={8} sx={{ position: "relative" }}>
-              <Map stations={stations} />
+              <Map stations={stations} routeSubmittedAndValid={routeSubmittedAndValid}/>
             </Grid>
           </Grid>
         </Box>

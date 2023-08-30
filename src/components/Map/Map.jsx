@@ -8,7 +8,7 @@ import {
   ClusterContainer,
   RouteBannerContainer,
 } from "./mapStyles";
-import { Paper, Typography, CircularProgress} from "@mui/material";
+import { Paper, Typography, CircularProgress } from "@mui/material";
 
 import PopoverMarker from "./PopoverMarker";
 import { ClusterElement, ClusterText } from "./Cluster";
@@ -53,11 +53,16 @@ import { ClusterElement, ClusterText } from "./Cluster";
   v: "weekly",
 });
 
-const Map = ({ stations }) => {
+const Map = ({ stations, routeSubmittedAndValid }) => {
   const mapref = useRef();
   const [bounds, setBounds] = useState(null);
   const [zoom, setZoom] = useState(12);
-  // const [routeDetails, setRouteDetails] = useState({});
+
+  // the last set route details, but is not reset on clicking CLEAR ROUTE button
+  const [latestRouteDetails, setLatestRouteDetails] = useState({
+    duration: null,
+    distance: null,
+  });
 
   const points = stations.map((station) => ({
     type: "Feature",
@@ -108,19 +113,20 @@ const Map = ({ stations }) => {
           destination: destination,
           travelMode: google.maps.TravelMode.BICYCLING,
         },
-        (result, status) => {
+        (response, status) => {
           if (status === google.maps.DirectionsStatus.OK) {
-            directionsRenderer.setDirections(result);
+            directionsRenderer.setDirections(response);
             const directionsData = response.routes[0].legs[0];
             if (!directionsData) {
               console.error("error fetching route distance and duration");
             } else {
+              setLatestRouteDetails({distance: directionsData.distance.text, duration: directionsData.duration.text})
               console.log(
                 `Cycling distance is ${directionsData.distance.text}, and duration is ${directionsData.duration.text}`
               );
             }
           } else {
-            console.error(`error fetching directions ${result}`);
+            console.error(`error fetching directions ${response}`);
           }
         }
       );
@@ -131,33 +137,32 @@ const Map = ({ stations }) => {
     <MapContent>
       {/* test code to float div over map */}
       {/* use inputsSubmittedAndValid derived state to display conditionally */}
-      <RouteBannerContainer>
-        <div
-          style={
-            {
-              // textAlign: "center",
-            }
-          }
-        >
-          <Typography variant="body3">
-            Route Duration: XX hours, XX minutes
-          </Typography>
-          <Typography variant="body3">Route Distance: YY.Y km</Typography>
-        </div>
-      </RouteBannerContainer>
-      
+
+      {routeSubmittedAndValid && (
+        <RouteBannerContainer>
+          <div>
+            <Typography variant="body3">
+              Route Duration: {latestRouteDetails.duration ? latestRouteDetails.duration: "N/A"}
+            </Typography>
+            <Typography variant="body3">Route Distance:  {latestRouteDetails.distance ? latestRouteDetails.distance : "N/A"}</Typography>
+          </div>
+        </RouteBannerContainer>
+      )}
+
       {/* Rotating roading circle when map is still loading */}
-      {!mapref.current && <CircularProgress
-        sx={{
-          position: "absolute",
-          zIndex: "999",
-          width: "50px",
-          height: "50px",
-          top: "50%",
-          left: 'calc(-25px + 50%)',  // position in middle, accounting for width
-          pointerEvents: "none",
-        }}
-      />}
+      {!mapref.current && (
+        <CircularProgress
+          sx={{
+            position: "absolute",
+            zIndex: "999",
+            width: "50px",
+            height: "50px",
+            top: "50%",
+            left: "calc(-25px + 50%)", // position in middle, accounting for width
+            pointerEvents: "none",
+          }}
+        />
+      )}
 
       <GoogleMapReact
         // bootstrapURLKeys={{ key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY }}

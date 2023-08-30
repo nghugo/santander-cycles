@@ -71,6 +71,7 @@ export const RouteBannerContainer = (props) => {
         paddingTop: "3px",
         paddingBottom: "3px",
         borderRadius: "30px",
+        outline: "1px solid slategrey"
       }}
     >
       {props.children}
