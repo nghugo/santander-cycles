@@ -53,7 +53,7 @@ import { ClusterElement, ClusterText } from "./Cluster";
   v: "weekly",
 });
 
-const Map = ({ stations, routeSubmittedAndValid }) => {
+const Map = ({ stations, routeSubmittedAndValid, values }) => {
   const mapref = useRef();
   const [bounds, setBounds] = useState(null);
   const [zoom, setZoom] = useState(12);
@@ -87,6 +87,17 @@ const Map = ({ stations, routeSubmittedAndValid }) => {
     zoom,
     options: { radius: 150, maxZoom: 20 },
   });
+
+  // function getNameMatchingStation(value, stations) {
+  //   for (let station of stations) {
+  //     if (value === station.name) {
+  //       return station;
+  //     }
+  //   }
+  //   return null;
+  // }
+  // getNameMatchingStation(values["from"], stations);
+  // getNameMatchingStation(values["to"], stations);
 
   useEffect(() => {
     // Get Route and associated dist, time

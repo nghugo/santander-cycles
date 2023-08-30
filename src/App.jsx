@@ -22,7 +22,6 @@ function App() {
     stationNamesSorted.includes(values["from"]) &&
     stationNamesSorted.includes(values["to"]);
 
-
   const getOnInputChange = (name) => {
     return (e, value) => {
       setValues({ ...values, [name]: value });
@@ -116,7 +115,11 @@ function App() {
               />
             </Grid>
             <Grid item xs={12} md={8} sx={{ position: "relative" }}>
-              <Map stations={stations} routeSubmittedAndValid={routeSubmittedAndValid}/>
+              <Map
+                stations={stations}
+                routeSubmittedAndValid={routeSubmittedAndValid}
+                values={values}
+              />
             </Grid>
           </Grid>
         </Box>
