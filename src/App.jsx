@@ -115,7 +115,7 @@ function App() {
               />
             </Grid>
             <Grid item xs={12} md={8}>
-              <Box sx={{ height: "70px"}}>
+              <Box sx={{ height: "100px"}}>
                 <SearchBar />
               </Box>
 
@@ -123,7 +123,7 @@ function App() {
                 sx={{
                   position: "relative",
                   width: "100%",
-                  height: `calc(-70px + 100%)`, // 100% MINUS the height of the search bar
+                  height: `calc(-100px + 100%)`, // 100% MINUS the height of the search bar
                 }}
               >
                 {" "}
