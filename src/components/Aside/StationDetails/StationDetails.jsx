@@ -23,7 +23,7 @@ function StationNameField({
             {...params}
             label={label}
             error={invalidInput}
-            style={{ width: "100%", m: 0 }}
+            sx={{ width: "100%", m: 0 }}
             helperText={invalidInput ? "Invalid input" : " "}
             variant="filled"
           />
