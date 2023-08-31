@@ -37,9 +37,6 @@ const SearchBar = () => {
             return response.json();
           })
           .then((responseArray) => {
-            console.log(responseArray);
-            console.log("------");
-
             const responseArrayExtracted = responseArray.map((entry) => ({
               lat: Number(entry.lat),
               lng: Number(entry.lon),
@@ -47,34 +44,9 @@ const SearchBar = () => {
               addressObj: entry.address,
             }));
             setAutocompleteValues(responseArrayExtracted);
-            // console.log(responseArrayExtracted);
-            // console.log(typeof responseArrayExtracted);
           })
           .catch((error) => console.error(error));
-
-        //   {
-        //     const responseArray = response.json()
-        //     console.log(responseArray);
-        //     console.log("------")
-        //     // console.log(typeof(responseArray))
-        //     if (response.status == 200) {
-        //       const responseArrayExtracted = Object.keys(responseArray).map((key) => [
-        //         key,
-        //         responseArray[key],
-        //       ]);
-        //       setAutocompleteValues(
-        //         responseArrayExtracted.map((entry) => ({
-        //           lat: Number(entry.lat),
-        //           lng: Number(entry.lon),
-        //           fullname: entry.display_name,
-        //           addressObj: entry.address,
-        //         }))
-        //       );
-        //       console.log(responseArrayExtracted)
-        //       console.log(typeof(responseArrayExtracted))
-        //     }
-        //   }
-      }, 3000);
+      }, 400);
       return () => clearTimeout(delayDebounceFn);
     }
   }, [searchTerm]);
