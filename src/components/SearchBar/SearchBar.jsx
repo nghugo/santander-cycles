@@ -6,13 +6,17 @@ import SearchIcon from "@mui/icons-material/Search";
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [autocompleteValues, setAutocompleteValues] = useState([]);
+  const [searchLatLng, setSearchLatLng] = useState(null);
+
   const fullnames = autocompleteValues
     ? autocompleteValues.map((entry) => entry.fullname)
     : [];
 
   useEffect(() => {
     // no need to fetch if search term is empty
-    if (searchTerm) {
+    if (!searchTerm) {
+      setSearchLatLng(null);
+    } else {
       // debounce -> fetch after user has finished typing, rather than on every keystroke
       const delayDebounceFn = setTimeout(() => {
         console.log(`* ${searchTerm} *`);
@@ -20,7 +24,7 @@ const SearchBar = () => {
         fetch(
           "https://api.locationiq.com/v1/autocomplete?" +
             new URLSearchParams({
-                // key: import.meta.env.VITE_LOCATION_IQ_API_KEY,
+              key: import.meta.env.VITE_LOCATION_IQ_API_KEY,
               countrycodes: "gb",
               format: "json",
               q: searchTerm,
@@ -43,10 +47,25 @@ const SearchBar = () => {
               fullname: entry.display_name,
               addressObj: entry.address,
             }));
+
+            // update autocomplete suggestions
             setAutocompleteValues(responseArrayExtracted);
+
+            // update autocomplete suggestions
+            if (
+              autocompleteValues.length === 1 &&
+              searchTerm === autocompleteValues[0].fullname
+            ) {
+              setSearchLatLng({
+                lat: autocompleteValues[0].lat,
+                lng: autocompleteValues[0].lng,
+              });
+            } else {
+              setSearchLatLng(null);
+            }
           })
           .catch((error) => console.error(error));
-      }, 400);
+      }, 300); // wait for X milliseconds after the user finishes typing
       return () => clearTimeout(delayDebounceFn);
     }
   }, [searchTerm]);
