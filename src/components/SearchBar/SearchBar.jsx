@@ -13,6 +13,7 @@ const SearchBar = () => {
     : [];
 
   useEffect(() => {
+    console.log("initial execution, or state change detected by use effect")
     // no need to fetch if search term is empty
     if (!searchTerm) {
       setSearchLatLng(null);
@@ -29,10 +30,15 @@ const SearchBar = () => {
               format: "json",
               q: searchTerm,
               limit: "6",
+              dedupe: "1",
             })
         )
           .then((response) => {
-            if (!response.ok) {
+            // handle 404 error differenly than other HTTP error codes
+            if (response.status==404) {
+                setSearchLatLng(null);
+            }
+            else if (!response.ok) {
               let err = new Error("HTTP status code: " + response.status);
               err.response = response;
               err.status = response.status;
@@ -42,6 +48,7 @@ const SearchBar = () => {
           })
           .then((responseArray) => {
             const responseArrayExtracted = responseArray.map((entry) => ({
+              key: entry.osm_id, // OpenStreetMap id
               lat: Number(entry.lat),
               lng: Number(entry.lon),
               fullname: entry.display_name,
@@ -52,20 +59,36 @@ const SearchBar = () => {
             setAutocompleteValues(responseArrayExtracted);
 
             // update autocomplete suggestions
-            if (
-              autocompleteValues.length === 1 &&
-              searchTerm === autocompleteValues[0].fullname
-            ) {
-              setSearchLatLng({
-                lat: autocompleteValues[0].lat,
-                lng: autocompleteValues[0].lng,
-              });
-            } else {
-              setSearchLatLng(null);
-            }
+            
+            (function (){
+                for (const [i, v] of autocompleteValues.entries()) {
+                    if (v.fullname === searchTerm) {
+                        setSearchLatLng({
+                            lat: autocompleteValues[i].lat,
+                            lng: autocompleteValues[i].lng,
+                          });
+                        return
+                    }
+                }
+                setSearchLatLng(null);
+            })()  // IIFE to scan through autocompleteValues and find match
+            
+
+            // if (
+            //     autocompleteValues.length > 0 &&
+            //     (autocompleteValues.length === 1 || searchTerm === autocompleteValues[0].fullname)
+            // ) {
+            //   setSearchLatLng({
+            //     lat: autocompleteValues[0].lat,
+            //     lng: autocompleteValues[0].lng,
+            //   });
+            // } else {
+            //   setSearchLatLng(null);
+            // }
+
           })
           .catch((error) => console.error(error));
-      }, 300); // wait for X milliseconds after the user finishes typing
+      }, 400); // wait for X milliseconds after the user finishes typing (400ms => 30 words per minute)
       return () => clearTimeout(delayDebounceFn);
     }
   }, [searchTerm]);
