@@ -25,6 +25,7 @@ function StationNameField({
             error={invalidInput}
             style={{ width: "100%", m: 0 }}
             helperText={invalidInput ? "Invalid input" : " "}
+            variant="filled"
           />
         )}
       />

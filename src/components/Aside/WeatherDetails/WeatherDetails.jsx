@@ -1,8 +1,9 @@
 import React from 'react';
+import { Typography } from '@mui/material';
 
 const WeatherDetails = () => {
     return (
-        <h1>Weather Details</h1>
+        <Typography variant="h5">Weather Details</Typography>
     );
 }
 

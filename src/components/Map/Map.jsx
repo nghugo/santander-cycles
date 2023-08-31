@@ -121,9 +121,11 @@ const Map = ({ stations, routeSubmittedAndValid, values }) => {
         });
       }
       
+      // Get route inputs (set in StationDetails.jsx, states lifted up to App.jsx)
       const origin = getNameMatchingLatLng(values["origin"], stations);
       const destination = getNameMatchingLatLng(values["destination"], stations);
-
+      
+      // Render route on the map by calling Directions API
       directionsRenderer.current.setMap(mapref.current);
       directionsService.current.route(
         {
@@ -160,9 +162,7 @@ const Map = ({ stations, routeSubmittedAndValid, values }) => {
 
   return (
     <MapContent>
-      {/* test code to float div over map */}
-      {/* use inputsSubmittedAndValid derived state to display conditionally */}
-
+      {/* Display route information conditional on routeSubmittedAndValid */}
       {routeSubmittedAndValid && (
         <RouteBannerContainer>
           <div>
@@ -194,7 +194,7 @@ const Map = ({ stations, routeSubmittedAndValid, values }) => {
         </RouteBannerContainer>
       )}
 
-      {/* Rotating roading circle when map is still loading */}
+      {/* Display rotating roading circle when map is still loading */}
       {!mapref.current && (
         <CircularProgress
           sx={{
@@ -212,6 +212,7 @@ const Map = ({ stations, routeSubmittedAndValid, values }) => {
       <GoogleMapReact
         // bootstrapURLKeys={{ key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY }} // not needed when key is provided in google maps import
         defaultCenter={{ lat: 51.509865, lng: -0.118092 }} // hard-coded london center coordinates
+        // center = {{lat: 22.3193, lng: 114.1694}} // override defaultCenter -> set dynamically via React state
         defaultZoom={12}
         yesIWantToUseGoogleMapApiInternals
         onGoogleApiLoaded={({ map }) => {

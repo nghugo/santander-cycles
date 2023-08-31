@@ -6,6 +6,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import Header from "./components/Header/Header";
 import Aside from "./components/Aside/Aside";
 import Map from "./components/Map/Map";
+import SearchBar from "./components/SearchBar/SearchBar";
 import { theme } from "./styles.js";
 
 function App() {
@@ -113,12 +114,25 @@ function App() {
                 cycleLastUpdatedEpoch={cycleLastUpdatedEpoch}
               />
             </Grid>
-            <Grid item xs={12} md={8} sx={{ position: "relative" }}>
-              <Map
-                stations={stations}
-                routeSubmittedAndValid={routeSubmittedAndValid}
-                values={values}
-              />
+            <Grid item xs={12} md={8}>
+              <Box sx={{ height: "70px"}}>
+                <SearchBar />
+              </Box>
+
+              <Box
+                sx={{
+                  position: "relative",
+                  width: "100%",
+                  height: `calc(-70px + 100%)`, // 100% MINUS the height of the search bar
+                }}
+              >
+                {" "}
+                <Map
+                  stations={stations}
+                  routeSubmittedAndValid={routeSubmittedAndValid}
+                  values={values}
+                />
+              </Box>
             </Grid>
           </Grid>
         </Box>
