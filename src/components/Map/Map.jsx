@@ -53,7 +53,7 @@ import { ClusterElement, ClusterText } from "./Cluster";
   v: "weekly",
 });
 
-const Map = ({ stations, routeSubmittedAndValid, values }) => {
+const Map = ({ stations, routeSubmittedAndValid, values, searchedLatLng }) => {
   const mapref = useRef();
   const directionsService = useRef();
   const directionsRenderer = useRef();
@@ -211,8 +211,8 @@ const Map = ({ stations, routeSubmittedAndValid, values }) => {
 
       <GoogleMapReact
         // bootstrapURLKeys={{ key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY }} // not needed when key is provided in google maps import
-        defaultCenter={{ lat: 51.509865, lng: -0.118092 }} // hard-coded london center coordinates
-        // center = {{lat: 22.3193, lng: 114.1694}} // override defaultCenter -> set dynamically via React state
+        defaultCenter={{ lat: 51.509865, lng: -0.118092 }} // London center coordinates
+        center = {searchedLatLng ? searchedLatLng: { lat: 51.509865, lng: -0.118092 }} // override defaultCenter -> set dynamically via React state
         defaultZoom={12}
         yesIWantToUseGoogleMapApiInternals
         onGoogleApiLoaded={({ map }) => {

@@ -14,6 +14,7 @@ function App() {
   const [values, setValues] = useState({ origin: "", destination: "" }); // input values
   const [stations, setStations] = useState([]);
   const [cycleLastUpdatedEpoch, setCycleLastUpdatedEpoch] = useState(null);
+  const [searchedLatLng, setSearchedLatLng] = useState(null);
 
   const stationNamesSorted = stations.map((station) => station.name).sort();
 
@@ -124,7 +125,9 @@ function App() {
             </Grid>
             <Grid item xs={12} md={8}>
               <Box sx={{ height: "100px"}}>
-                <SearchBar />
+                <SearchBar
+                setSearchedLatLng={setSearchedLatLng}
+                />
               </Box>
 
               <Box
@@ -139,6 +142,7 @@ function App() {
                   stations={stations}
                   routeSubmittedAndValid={routeSubmittedAndValid}
                   values={values}
+                  searchedLatLng={searchedLatLng}
                 />
               </Box>
             </Grid>
