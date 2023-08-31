@@ -214,6 +214,7 @@ const Map = ({ stations, routeSubmittedAndValid, values, searchedLatLng }) => {
         defaultCenter={{ lat: 51.509865, lng: -0.118092 }} // London center coordinates
         center = {searchedLatLng ? searchedLatLng: { lat: 51.509865, lng: -0.118092 }} // override defaultCenter -> set dynamically via React state
         defaultZoom={12}
+        zoom = {searchedLatLng ? 14: 12} // override defaultZoom -> set dynamically via React state
         yesIWantToUseGoogleMapApiInternals
         onGoogleApiLoaded={({ map }) => {
           mapref.current = map;

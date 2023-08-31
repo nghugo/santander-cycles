@@ -126,6 +126,7 @@ function App() {
             <Grid item xs={12} md={8}>
               <Box sx={{ height: "100px"}}>
                 <SearchBar
+                searchedLatLng={searchedLatLng}
                 setSearchedLatLng={setSearchedLatLng}
                 />
               </Box>
