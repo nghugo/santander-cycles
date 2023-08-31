@@ -54,7 +54,15 @@ function App() {
     fetch(
       "https://tfl.gov.uk/tfl/syndication/feeds/cycle-hire/livecyclehireupdates.xml"
     )
-      .then((response) => response.text())
+      .then((response) => {
+        if (!response.ok) {
+          let err = new Error("HTTP status code: " + response.status);
+          err.response = response;
+          err.status = response.status;
+          throw err;
+        }
+        return response.text();
+      })
       .then((str) => new window.DOMParser().parseFromString(str, "text/xml"))
       .then((data) => {
         setCycleLastUpdatedEpoch(
