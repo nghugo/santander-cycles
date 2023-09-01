@@ -1,6 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { InputAdornment, TextField, Autocomplete } from "@mui/material";
+import {
+  InputAdornment,
+  TextField,
+  Autocomplete,
+  Typography,
+  Box,
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
@@ -22,7 +28,7 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
         fetch(
           "https://api.locationiq.com/v1/autocomplete?" +
             new URLSearchParams({
-              // key: import.meta.env.VITE_LOCATION_IQ_API_KEY,
+              key: import.meta.env.VITE_LOCATION_IQ_API_KEY,
               countrycodes: "gb",
               format: "json",
               q: searchTerm,
@@ -71,9 +77,8 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
                 }
                 setSearchedLatLng(null);
               })(); // IIFE to scan through autocompleteValues and find match
-            }
-            else {
-              setAutocompleteValues([])
+            } else {
+              setAutocompleteValues([]);
             }
           })
           .catch((error) => console.error(error));
@@ -85,7 +90,7 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
   return (
     <Autocomplete
       id="search-bar"
-      filterOptions={(options) => options}  // prevent Autocomplete from filtering options internally https://stackoverflow.com/questions/62323166/material-ui-autocomplete-not-updating-options
+      filterOptions={(options) => options} // prevent Autocomplete from filtering options internally https://stackoverflow.com/questions/62323166/material-ui-autocomplete-not-updating-options
       options={fullnames} // To implement: style options differenly than actual value
       noOptionsText="No matching location"
       onInputChange={(e, value) => {
@@ -118,6 +123,65 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
               searchTerm && !searchedLatLng ? "Incomplete / Invalid input" : " "
             } // To Implement boolean
           />
+        );
+      }}
+      renderOption={(props, option) => {
+        const matchingAutocompleteValue = autocompleteValues.find(
+          (entry) => entry.fullname === option
+        );
+
+        const getValuecommaOrValueorEmptystring = (
+          matchingAutocompleteValue,
+          key
+        ) => {
+          if (key in matchingAutocompleteValue.addressObj) {
+            return (
+              <Typography
+                variant="body2"
+                sx={{
+                  display: "inline",
+                  // outline: "1px solid red",
+                  "&::after": {
+                    content: '", "',
+                  },
+                  "&:last-of-type::after": {
+                    display: "none",
+                  },
+                }}
+              >
+                {matchingAutocompleteValue.addressObj[key]}
+              </Typography>
+            );
+          } else {
+            return null;
+          }
+        };
+
+        return (
+          <li {...props}>
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <div>
+                <Typography variant="body1" sx={{ fontSize: 16, py: 0, my: 0 }}>
+                  {matchingAutocompleteValue.addressObj.name}
+                </Typography>
+              </div>
+              <div>
+                <div>
+                  {getValuecommaOrValueorEmptystring(matchingAutocompleteValue,"road")}
+                  {getValuecommaOrValueorEmptystring(matchingAutocompleteValue,"city")}
+                  {getValuecommaOrValueorEmptystring(matchingAutocompleteValue,"county")}
+                  {getValuecommaOrValueorEmptystring(matchingAutocompleteValue,"state")}
+                </div>
+                <div>
+                  {getValuecommaOrValueorEmptystring(matchingAutocompleteValue,"postcode")}
+                  {getValuecommaOrValueorEmptystring(matchingAutocompleteValue,"country")}
+                </div>
+              </div>
+
+            </Box>
+
+            {/* name road city county state postcode country */}
+          </li>
         );
       }}
     />
