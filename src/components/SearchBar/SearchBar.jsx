@@ -137,10 +137,8 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
           if (key in matchingAutocompleteValue.addressObj) {
             return (
               <Typography
-                variant="body2"
+                variant="body4"
                 sx={{
-                  display: "inline",
-                  // outline: "1px solid red",
                   "&::after": {
                     content: '", "',
                   },
@@ -159,20 +157,20 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
 
         return (
           <li {...props}>
-            <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <Box sx={{ display: "flex", flexDirection: "column", py: 0.5}}>
               <div>
-                <Typography variant="body1" sx={{ fontSize: 16, py: 0, my: 0 }}>
+                <Typography variant="body1" sx={{ fontSize: 18, fontWeight: 500, padding: 0, margin: 0, lineHeight: "18px", paddingBottom: "2px"}}>
                   {matchingAutocompleteValue.addressObj.name}
                 </Typography>
               </div>
               <div>
-                <div>
+              <div style={{paddingBottom: "2px", lineHeight: "16px"}}>
                   {getValuecommaOrValueorEmptystring(matchingAutocompleteValue,"road")}
                   {getValuecommaOrValueorEmptystring(matchingAutocompleteValue,"city")}
                   {getValuecommaOrValueorEmptystring(matchingAutocompleteValue,"county")}
                   {getValuecommaOrValueorEmptystring(matchingAutocompleteValue,"state")}
                 </div>
-                <div>
+                <div style={{padding: 0, lineHeight: "16px"}}>
                   {getValuecommaOrValueorEmptystring(matchingAutocompleteValue,"postcode")}
                   {getValuecommaOrValueorEmptystring(matchingAutocompleteValue,"country")}
                 </div>
@@ -181,7 +179,7 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
             </Box>
 
             {/* name road city county state postcode country */}
-          </li>
+          </li >
         );
       }}
     />

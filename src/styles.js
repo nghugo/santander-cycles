@@ -39,6 +39,10 @@ export const theme = responsiveFontSizes(
         display: "block",
         fontWeight: 500,
       },
+      body4: {
+        fontSize: 13,
+        display: "inline",
+      },
       muted: {
         fontSize: 16,
         color: "slategrey",
