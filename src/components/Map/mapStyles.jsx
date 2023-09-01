@@ -22,7 +22,7 @@ export const MarkerContainer = (props) => {
       style={{
         width: "50px",
         height: "50px",
-        top: "-30px", // -50px, but +20px to account for 20px paddingBottom of PopoverMarker
+        top: "-40px", // -50px, but +10px to account for 10px paddingBottom of PopoverMarker
         left: "-25px",
         position: "relative",
         display: "flex",
@@ -60,7 +60,7 @@ export const RouteBannerContainer = (props) => {
     <div
       style={{
         position: "absolute",
-        zIndex: 3, // one level higher than PopoverMarker (highest map element)
+        zIndex: 999,
         width: "260px",
         left: 'calc(-130px + 50%)',  // position in middle, accounting for width
         top: "10px",

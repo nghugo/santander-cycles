@@ -22,7 +22,7 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
         fetch(
           "https://api.locationiq.com/v1/autocomplete?" +
             new URLSearchParams({
-              key: import.meta.env.VITE_LOCATION_IQ_API_KEY,
+              // key: import.meta.env.VITE_LOCATION_IQ_API_KEY,
               countrycodes: "gb",
               format: "json",
               q: searchTerm,
@@ -31,7 +31,7 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
             })
         )
           .then((response) => {
-            // handle 404 error differenly than other HTTP error codes
+            // handle 404 error differenly than other HTTP error statuses
             if (response.status == 404) {
               setSearchedLatLng(null);
             } else if (!response.ok) {
@@ -106,7 +106,7 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
             }}
             color={searchedLatLng ? "success" : null}
             focused={searchTerm !== ""}
-            error={searchTerm!=="" && !searchedLatLng && !isFocused}
+            error={searchTerm !== "" && !searchedLatLng && !isFocused}
             helperText={
               searchTerm && !searchedLatLng ? "Incomplete / Invalid input" : " "
             } // To Implement boolean

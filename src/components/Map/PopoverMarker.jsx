@@ -44,7 +44,7 @@ export default function PopoverMarker(props) {
           display: "flex",
           justifyContent: "center",
           padding: "5px",
-          paddingBottom: "20px",
+          paddingBottom: "10px",
           zIndex: "2" // one level higher than ClusterContainer since you can manually zoom in
         }}
       >

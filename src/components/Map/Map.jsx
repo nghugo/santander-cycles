@@ -102,14 +102,14 @@ const Map = ({ stations, routeSubmittedAndValid, values, searchedLatLng }) => {
   useEffect(() => {
     // Get Route and associated dist, time
     if (mapref.current && routeSubmittedAndValid) {
-      console.log(' * * * Called Google Maps Directions API * * *')
+      console.log(" * * * Called Google Maps Directions API * * *");
       const polylineOptionsActual = new google.maps.Polyline({
         strokeColor: "#FF0000",
         strokeOpacity: 1.0,
         strokeWeight: 3,
       });
 
-      // Only one instance of directionsService and directionsRenderer, enabling deletion of previous route 
+      // Only one instance of directionsService and directionsRenderer, enabling deletion of previous route
       // https://stackoverflow.com/questions/32949713/google-map-remove-previous-route-and-draw-a-new-route
       if (!directionsService.current) {
         directionsService.current = new google.maps.DirectionsService();
@@ -120,11 +120,14 @@ const Map = ({ stations, routeSubmittedAndValid, values, searchedLatLng }) => {
           polylineOptions: polylineOptionsActual,
         });
       }
-      
+
       // Get route inputs (set in StationDetails.jsx, states lifted up to App.jsx)
       const origin = getNameMatchingLatLng(values["origin"], stations);
-      const destination = getNameMatchingLatLng(values["destination"], stations);
-      
+      const destination = getNameMatchingLatLng(
+        values["destination"],
+        stations
+      );
+
       // Render route on the map by calling Directions API
       directionsRenderer.current.setMap(mapref.current);
       directionsService.current.route(
@@ -155,7 +158,7 @@ const Map = ({ stations, routeSubmittedAndValid, values, searchedLatLng }) => {
     }
     return () => {
       if (directionsRenderer.current) {
-        directionsRenderer.current.setDirections({routes: []})
+        directionsRenderer.current.setDirections({ routes: [] });
       }
     }; // remove previous route
   }, [routeSubmittedAndValid, values]);
@@ -212,9 +215,11 @@ const Map = ({ stations, routeSubmittedAndValid, values, searchedLatLng }) => {
       <GoogleMapReact
         // bootstrapURLKeys={{ key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY }} // not needed when key is provided in google maps import
         defaultCenter={{ lat: 51.509865, lng: -0.118092 }} // London center coordinates
-        center = {searchedLatLng ? searchedLatLng: { lat: 51.509865, lng: -0.118092 }} // override defaultCenter -> set dynamically via React state
+        center={
+          searchedLatLng ? searchedLatLng : { lat: 51.509865, lng: -0.118092 }
+        } // override defaultCenter -> set dynamically via React state
         defaultZoom={12}
-        zoom = {searchedLatLng ? 14: 12} // override defaultZoom -> set dynamically via React state
+        zoom={searchedLatLng ? 14 : 12} // override defaultZoom -> set dynamically via React state
         yesIWantToUseGoogleMapApiInternals
         onGoogleApiLoaded={({ map }) => {
           mapref.current = map;
@@ -233,6 +238,22 @@ const Map = ({ stations, routeSubmittedAndValid, values, searchedLatLng }) => {
           ]);
         }}
       >
+        {searchedLatLng && (
+          <MarkerContainer
+            lat={searchedLatLng["lat"]}
+            lng={searchedLatLng["lng"]}
+          >
+            <img
+              width="20"
+              src="src/assets/images/search_pin.png"
+              style={{
+                paddingBottom: "10px",
+                zIndex: "3", // one level higher than PopoverMarker
+              }}
+            />
+          </MarkerContainer>
+        )}
+
         {clusters.map((cluster, index) => {
           const [lng, lat] = cluster.geometry.coordinates;
           const { cluster: isCluster, point_count: pointcount } =
