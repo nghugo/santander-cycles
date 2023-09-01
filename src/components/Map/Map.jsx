@@ -151,7 +151,7 @@ const Map = ({ stations, routeSubmittedAndValid, values, searchedLatLng }) => {
               });
             }
           } else {
-            console.error(`error fetching directions ${response}`);
+            console.error(`error fetching directions}`);
           }
         }
       );

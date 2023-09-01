@@ -22,7 +22,7 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
         fetch(
           "https://api.locationiq.com/v1/autocomplete?" +
             new URLSearchParams({
-              key: import.meta.env.VITE_LOCATION_IQ_API_KEY,
+              // key: import.meta.env.VITE_LOCATION_IQ_API_KEY,
               countrycodes: "gb",
               format: "json",
               q: searchTerm,
@@ -72,9 +72,9 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
                 setSearchedLatLng(null);
               })(); // IIFE to scan through autocompleteValues and find match
             }
-            // else {
-            //   setAutocompleteValues([])
-            // }
+            else {
+              setAutocompleteValues([])
+            }
           })
           .catch((error) => console.error(error));
       }, 400); // wait for X milliseconds after the user finishes typing (400ms => 30 words per minute)
@@ -85,11 +85,9 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
   return (
     <Autocomplete
       id="search-bar"
-      freeSolo
       filterOptions={(options) => options}  // prevent Autocomplete from filtering options internally https://stackoverflow.com/questions/62323166/material-ui-autocomplete-not-updating-options
-      // forcePopupIcon={true}
       options={fullnames} // To implement: style options differenly than actual value
-      noOptionsText="No locations"
+      noOptionsText="No matching location"
       onInputChange={(e, value) => {
         setSearchTerm(value);
       }}
