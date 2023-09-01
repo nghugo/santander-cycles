@@ -26,9 +26,12 @@ export const theme = responsiveFontSizes(
       subtitle1: {
         fontWeight: 600,
         fontSize: 14,
+        m: 0,
+        p: 0,
       },
       subtitle2: {
         fontSize: 14,
+        marginBottom: "4px",
       },
       body2: {
         fontSize: 13,
@@ -51,7 +54,7 @@ export const theme = responsiveFontSizes(
         marginTop: "16px",
       },
       muted2: {
-        fontSize: 12,
+        fontSize: 13,
         color: "slategrey",
         display: "block",
       },

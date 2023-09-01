@@ -76,6 +76,8 @@ const Map = ({ stations, routeSubmittedAndValid, values, searchedLatLng }) => {
       nbBikes: station.nbBikes,
       nbStandardBikes: station.nbStandardBikes,
       nbEBikes: station.nbEBikes,
+      nbEmptyDocks: station.nbEmptyDocks,
+      nbDocks: station.nbDocks,
     },
     geometry: {
       type: "Point",
@@ -303,6 +305,10 @@ const Map = ({ stations, routeSubmittedAndValid, values, searchedLatLng }) => {
                         Standard: {cluster.properties.nbStandardBikes},
                         Electric: {cluster.properties.nbEBikes}
                       </Typography>
+                      <Typography variant="body2">
+                        Empty Docks: {cluster.properties.nbEmptyDocks}
+                      </Typography>
+                      {/* nbEmptyDocks: station., */}
                     </>
                   }
                 </Paper>
