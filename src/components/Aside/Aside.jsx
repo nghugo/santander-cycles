@@ -8,7 +8,8 @@ const Aside = ({
   setSubmitted,
   values,
   setValues,
-  stationNames,
+  stationNamesSorted,
+  stations,
   getOnInputChange,
   isInvalidInput,
   cycleLastUpdatedEpoch,
@@ -19,7 +20,8 @@ const Aside = ({
       <StationDetails
         setSubmitted={setSubmitted}
         values={values}
-        stationNames={stationNames}
+        stationNamesSorted={stationNamesSorted}
+        stations={stations}
         setValues={setValues}
         getOnInputChange={getOnInputChange}
         isInvalidInput={isInvalidInput}

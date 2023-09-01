@@ -98,7 +98,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box // FlexBody
+      <Box
         sx={{
           minHeight: "100vh",
           display: "flex",
@@ -116,7 +116,8 @@ function App() {
               <Aside
                 setSubmitted={setSubmitted}
                 values={values}
-                stationNames={stationNamesSorted}
+                stationNamesSorted={stationNamesSorted}
+                stations={stations}
                 setValues={setValues}
                 getOnInputChange={getOnInputChange}
                 isInvalidInput={isInvalidInput}

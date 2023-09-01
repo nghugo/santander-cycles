@@ -1,11 +1,19 @@
 import React from "react";
-import { TextField, Autocomplete, Typography, Box } from "@mui/material";
-import Button from "@mui/material/Button";
+import {
+  TextField,
+  Autocomplete,
+  Typography,
+  Box,
+  Button,
+  Grid,
+} from "@mui/material";
+
+import StationCard from "./StationCard";
 
 function StationNameField({
   label,
   id,
-  stationNames,
+  stationNamesSorted,
   onInputChange,
   value,
   invalidInput,
@@ -14,11 +22,13 @@ function StationNameField({
     <>
       <Autocomplete
         id={id}
-        options={stationNames}
+        options={stationNamesSorted}
         noOptionsText="No matching station"
         onInputChange={onInputChange}
         value={value}
-        isOptionEqualToValue={(option, value) => value === option || value === ''}
+        isOptionEqualToValue={(option, value) =>
+          value === option || value === ""
+        }
         renderInput={(params) => (
           <TextField
             {...params}
@@ -38,26 +48,33 @@ function StationDetails({
   setSubmitted,
   values,
   setValues,
-  stationNames,
+  stationNamesSorted,
+  stations,
   getOnInputChange,
   isInvalidInput,
   cycleLastUpdatedEpoch,
 }) {
+  const originStation =
+    stations.length > 0
+      ? stations.find((entry) => entry.name === values["origin"])
+      : null;
+  console.log(originStation);
+
+  const destinationStation =
+    stations.length > 0
+      ? stations.find((entry) => entry.name === values["destination"])
+      : null;
+  console.log(destinationStation);
+
   return (
     <>
       <Typography variant="h5">Station Details</Typography>
-      <Typography variant="muted">
-        Stations last refreshed:{" "}
-        {cycleLastUpdatedEpoch
-          ? new Date(parseInt(cycleLastUpdatedEpoch)).toLocaleString("en-GB")
-          : "N/A"}
-      </Typography>
 
       <Box component="form" noValidate autoComplete="off">
         <StationNameField
           label="Origin (A)"
           id="origin"
-          stationNames={stationNames}
+          stationNamesSorted={stationNamesSorted}
           onInputChange={getOnInputChange("origin")}
           invalidInput={isInvalidInput("origin")}
           value={values.origin || ""}
@@ -65,7 +82,7 @@ function StationDetails({
         <StationNameField
           label="Destination (B)"
           id="destination"
-          stationNames={stationNames}
+          stationNamesSorted={stationNamesSorted}
           onInputChange={getOnInputChange("destination")}
           invalidInput={isInvalidInput("destination")}
           value={values.destination || ""}
@@ -94,6 +111,25 @@ function StationDetails({
           </Button>
         </Box>
       </Box>
+
+      <Grid container spacing={2} sx={{mb: 3}}>
+        <Grid item xs={12} sm={6} md={12} xl={6}>
+          <StationCard station={originStation} prefix="Origin"/>
+        </Grid>
+        <Grid item xs={12} sm={6} md={12} xl={6}>
+          <StationCard station={destinationStation}  prefix="Destination"/>
+        </Grid>
+      </Grid>
+
+      
+
+      <button>REFRESH STATION AVAILABILITIES BUTTON</button>
+      <Typography variant="muted">
+        Stations last refreshed:{" "}
+        {cycleLastUpdatedEpoch
+          ? new Date(parseInt(cycleLastUpdatedEpoch)).toLocaleString("en-GB")
+          : "N/A"}
+      </Typography>
     </>
   );
 }
