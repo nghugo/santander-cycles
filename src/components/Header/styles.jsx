@@ -1,19 +1,19 @@
 import { styled } from "@mui/system";
-import { AppBar, Typography} from "@mui/material";
+import { AppBar, Typography, Box } from "@mui/material";
 
 export const IconLink = styled("a")({
   marginLeft: "8px",
   display: "flex",
   alignItems: "center",
   "& svg": {
-    transition: "transform 0.1s ease-out"
+    transition: "transform 0.1s ease-out",
   },
   "&:hover svg path": {
     fill: "#FFEB3B",
   },
   "&:hover svg": {
-    transform: "translate(0, -3px)"
-  }
+    transform: "translate(0, -3px)",
+  },
 });
 
 export const IconGroup = styled("div")({
@@ -33,6 +33,7 @@ export const FlexAppBar = (props) => (
       display: "flex",
       flexDirection: "row",
     }}
+    elevation={2}
   >
     {props.children}
   </AppBar>
@@ -49,4 +50,16 @@ export const HeaderTitle = (props) => (
   >
     {props.children}
   </Typography>
+);
+
+export const HeaderTitleSection = (props) => (
+  <Box
+    sx={{
+      display: "flex",
+      columnGap: "10px",
+      alignItems: "center",
+    }}
+  >
+    {props.children}
+  </Box>
 );

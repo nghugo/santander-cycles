@@ -1,12 +1,24 @@
-import { IconLink, IconGroup, FlexAppBar, HeaderTitle} from "./styles";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+
+import {
+  IconLink,
+  IconGroup,
+  FlexAppBar,
+  HeaderTitle,
+  HeaderTitleSection,
+} from "./styles";
 
 const Header = () => {
+  const theme = useTheme();
+  const aboveSm = useMediaQuery(theme.breakpoints.up("sm"));
   return (
     <>
       <FlexAppBar>
-        <HeaderTitle>
-          Santander Cycles Companion
-        </HeaderTitle>
+        <HeaderTitleSection>
+          {aboveSm && <img src="favicon.png" width="40px" height="40px"/>}
+          <HeaderTitle>Santander Cycles Companion</HeaderTitle>
+        </HeaderTitleSection>
         <IconGroup>
           <IconLink href="https://github.com/nghugo/santander-cycles">
             <svg
