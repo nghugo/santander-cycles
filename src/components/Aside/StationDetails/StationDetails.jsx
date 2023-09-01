@@ -18,6 +18,7 @@ function StationNameField({
         noOptionsText="No matching station"
         onInputChange={onInputChange}
         value={value}
+        isOptionEqualToValue={(option, value) => value === option || value === ''}
         renderInput={(params) => (
           <TextField
             {...params}

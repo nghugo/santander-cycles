@@ -12,7 +12,6 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
     ? autocompleteValues.map((entry) => entry.fullname)
     : [];
 
-    
   useEffect(() => {
     // no need to fetch if search term is empty
     if (!searchTerm) {
@@ -32,9 +31,11 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
             })
         )
           .then((response) => {
-            // handle 404 error differenly than other HTTP error statuses
+            // handle 404 error differently than other HTTP error statuses
             if (response.status == 404) {
+              console.log("* 404 response status *");
               setSearchedLatLng(null);
+              return [];
             } else if (!response.ok) {
               let err = new Error("HTTP status code: " + response.status);
               err.response = response;
@@ -44,7 +45,7 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
             return response.json();
           })
           .then((responseArray) => {
-            if (responseArray) {
+            if (responseArray.length > 0) {
               const responseArrayExtracted = responseArray.map((entry) => ({
                 key: entry.osm_id, // OpenStreetMap id
                 lat: Number(entry.lat),
@@ -55,22 +56,25 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
 
               // update autocomplete suggestions
               setAutocompleteValues(responseArrayExtracted);
-            }
 
-            // update lat lng coordinates if input corresponds to an autocomplete
-            // else set null
-            (function () {
-              for (const [i, v] of autocompleteValues.entries()) {
-                if (v.fullname === searchTerm) {
-                  setSearchedLatLng({
-                    lat: autocompleteValues[i].lat,
-                    lng: autocompleteValues[i].lng,
-                  });
-                  return;
+              // update lat lng coordinates if input corresponds to an autocomplete
+              // else set null
+              (function () {
+                for (const [i, v] of autocompleteValues.entries()) {
+                  if (v.fullname === searchTerm) {
+                    setSearchedLatLng({
+                      lat: autocompleteValues[i].lat,
+                      lng: autocompleteValues[i].lng,
+                    });
+                    return;
+                  }
                 }
-              }
-              setSearchedLatLng(null);
-            })(); // IIFE to scan through autocompleteValues and find match
+                setSearchedLatLng(null);
+              })(); // IIFE to scan through autocompleteValues and find match
+            }
+            // else {
+            //   setAutocompleteValues([])
+            // }
           })
           .catch((error) => console.error(error));
       }, 400); // wait for X milliseconds after the user finishes typing (400ms => 30 words per minute)
@@ -82,7 +86,10 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
     <Autocomplete
       id="search-bar"
       freeSolo
+      filterOptions={(options) => options}  // prevent Autocomplete from filtering options internally https://stackoverflow.com/questions/62323166/material-ui-autocomplete-not-updating-options
+      // forcePopupIcon={true}
       options={fullnames} // To implement: style options differenly than actual value
+      noOptionsText="No locations"
       onInputChange={(e, value) => {
         setSearchTerm(value);
       }}
