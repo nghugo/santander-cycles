@@ -14,8 +14,8 @@ function StationNameField({
     <>
       <Autocomplete
         id={id}
-        freeSolo
         options={stationNames}
+        noOptionsText="No matching station"
         onInputChange={onInputChange}
         value={value}
         renderInput={(params) => (

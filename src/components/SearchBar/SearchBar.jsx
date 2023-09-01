@@ -12,6 +12,7 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
     ? autocompleteValues.map((entry) => entry.fullname)
     : [];
 
+    
   useEffect(() => {
     // no need to fetch if search term is empty
     if (!searchTerm) {
@@ -22,7 +23,7 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
         fetch(
           "https://api.locationiq.com/v1/autocomplete?" +
             new URLSearchParams({
-              // key: import.meta.env.VITE_LOCATION_IQ_API_KEY,
+              key: import.meta.env.VITE_LOCATION_IQ_API_KEY,
               countrycodes: "gb",
               format: "json",
               q: searchTerm,
@@ -85,6 +86,7 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
       onInputChange={(e, value) => {
         setSearchTerm(value);
       }}
+      // noOptionsText="No matching location"
       onFocus={() => setIsFocused(true)}
       onBlur={() => setIsFocused(false)}
       value={searchTerm || ""}

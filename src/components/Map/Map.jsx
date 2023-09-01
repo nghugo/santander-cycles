@@ -238,6 +238,7 @@ const Map = ({ stations, routeSubmittedAndValid, values, searchedLatLng }) => {
           ]);
         }}
       >
+        {/* add searched lat lng pin to map if it exists */}
         {searchedLatLng && (
           <MarkerContainer
             lat={searchedLatLng["lat"]}
