@@ -110,7 +110,7 @@ function App() {
         }}
       >
         <Header />
-        <Box sx={{ m: { xs: 1, sm: 2, flex: 1, position: "relative" } }}>
+        <Box sx={{ m: { xs: 1, sm: 2, flex: 1, position: "relative"} }}>
           <Grid
             container
             style={{ width: "100%", height: "100%", position: "absolute" }}
@@ -129,7 +129,7 @@ function App() {
                 setCycleFetchVersion={setCycleFetchVersion}
               />
             </Grid>
-            <Grid item xs={12} md={8}>
+            <Grid item xs={12} md={8} sx={{pl: {md: 2}}}>
               <Box sx={{ height: "90px" }}>
                 <SearchBar
                   searchedLatLng={searchedLatLng}
@@ -141,7 +141,7 @@ function App() {
                 sx={{
                   position: "relative",
                   width: "100%",
-                  height: `calc(-90px + 100%)`, // 100% MINUS the height of the search bar
+                  height: `calc(-100px + 100%)`, // 100% MINUS the height of the search bar and some
                 }}
               >
                 {" "}

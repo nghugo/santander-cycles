@@ -100,6 +100,7 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
       onFocus={() => setIsFocused(true)}
       onBlur={() => setIsFocused(false)}
       value={searchTerm || ""}
+      sx={{mt:1}}
       renderInput={(params) => {
         return (
           <TextField

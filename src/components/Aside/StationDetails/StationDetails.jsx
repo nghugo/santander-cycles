@@ -70,7 +70,7 @@ function StationDetails({
       : null;
 
   return (
-    <Paper elevation={2} sx={{p: 2, mb:2}}>
+    <Paper elevation={3} sx={{ p: 2, mb:{xs:4, md:0}}}>
       <Typography variant="h5">Station Details</Typography>
 
       <Box component="form" noValidate autoComplete="off">
