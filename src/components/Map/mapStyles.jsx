@@ -6,7 +6,7 @@ export const MapContent = (props) => (
       height: "100%",
       width: "100%",
       position: "absolute",
-      minHeight: { xs: "83vh", md: 0 },
+      minHeight: { xs: "86vh", md: 0 },
       pb: { xs: 1, sm: 2, md: 0 },
     }}
   >

@@ -8,9 +8,9 @@ export const theme = responsiveFontSizes(
         styleOverrides: {
           body: {
             scrollbarGutter: "stable both-edges",
-          }
-        }
-      }
+          },
+        },
+      },
     },
     palette: {
       primary: {
@@ -20,12 +20,13 @@ export const theme = responsiveFontSizes(
         main: "#FF5722",
       },
       custom1: {
-        main: "#FFA000"
-      }
+        main: "#FFA000",
+      },
     },
     typography: {
       h5: {
         fontWeight: 600,
+        fontSize: "22px",
       },
       subtitle1: {
         fontWeight: 600,
@@ -50,16 +51,22 @@ export const theme = responsiveFontSizes(
         fontSize: 13,
         display: "inline",
       },
+      body5: {
+        fontSize: 16,
+        display: "block",
+      },
       muted: {
         fontSize: 16,
         color: "slategrey",
         display: "block",
-        marginBottom: "16px",
-        marginTop: "16px",
       },
       muted2: {
         fontSize: 13,
         color: "slategrey",
+        display: "block",
+      },
+      large: {
+        fontSize: 32,
         display: "block",
       },
     },
