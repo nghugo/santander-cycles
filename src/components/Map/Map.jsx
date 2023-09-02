@@ -215,7 +215,7 @@ const Map = ({ stations, routeSubmittedAndValid, values, searchedLatLng }) => {
       )}
 
       <GoogleMapReact
-        // bootstrapURLKeys={{ key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY }} // not needed when key is provided in google maps import
+        // bootstrapURLKeys={{ key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY }}
         defaultCenter={{ lat: 51.509865, lng: -0.118092 }} // London center coordinates
         center={
           searchedLatLng ? searchedLatLng : { lat: 51.509865, lng: -0.118092 }

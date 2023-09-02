@@ -27,7 +27,7 @@ function getUvCategory(index) {
 
 const Flexdiv = (props) => {
   return (
-    <div style={{ display: "flex", alignItems: "center", columnGap: "8px" }}>
+    <div style={{ display: "flex", alignItems: "center", columnGap: "8px", minWidth:"230px" }}>
       {props.children}
     </div>
   );
@@ -190,6 +190,7 @@ function WeatherDetails() {
                 width: "190px",
                 mb: 1,
                 mr: 1,
+                mt: 2,
                 fontWeight: 600,
                 color: "white",
               }}
