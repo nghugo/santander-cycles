@@ -110,7 +110,15 @@ function App() {
         }}
       >
         <Header />
-        <Box sx={{ m: { xs: 1, sm: 2, flex: 1, position: "relative"} }}>
+        <Box
+          sx={{
+            mr: { xs: 1, sm: 2 },
+            my: { xs: 1, sm: 2 },
+            ml: { xs: 1, sm: 2, md:0 }, // when md, the aside panel already has py of 2
+            flex: 1,
+            position: "relative",
+          }}
+        >
           <Grid
             container
             style={{ width: "100%", height: "100%", position: "absolute" }}
@@ -129,7 +137,7 @@ function App() {
                 setCycleFetchVersion={setCycleFetchVersion}
               />
             </Grid>
-            <Grid item xs={12} md={8} sx={{pl: {md: 2}}}>
+            <Grid item xs={12} md={8} sx={{ pl: { md: 2 } }}>
               <Box sx={{ height: "90px" }}>
                 <SearchBar
                   searchedLatLng={searchedLatLng}
