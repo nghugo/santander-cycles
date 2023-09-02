@@ -7,8 +7,10 @@ import {
   Button,
   Grid,
 } from "@mui/material";
-
+import DirectionsIcon from '@mui/icons-material/Directions';
+import DeleteIcon from '@mui/icons-material/Delete';
 import StationCard from "./StationCard";
+
 
 function StationNameField({
   label,
@@ -92,7 +94,8 @@ function StationDetails({
             type="button"
             onClick={() => setSubmitted(true)}
             variant="contained"
-            sx={{ width: "170px", mb: 1, mr: 1, fontWeight: 600 }}
+            sx={{ width: "180px", mb: 1, mr: 1, fontWeight: 600 }}
+            startIcon={<DirectionsIcon/>}
           >
             Set Route
           </Button>
@@ -105,7 +108,8 @@ function StationDetails({
             }}
             variant="contained"
             color="secondary"
-            sx={{ width: "170px", mb: 1, mr: 1, fontWeight: 600 }}
+            sx={{ width: "180px", mb: 1, mr: 1, fontWeight: 600 }}
+            startIcon={<DeleteIcon/>}
           >
             Clear Route
           </Button>

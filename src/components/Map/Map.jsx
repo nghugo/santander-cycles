@@ -60,7 +60,7 @@ const Map = ({ stations, routeSubmittedAndValid, values, searchedLatLng }) => {
   const [bounds, setBounds] = useState(null);
   const [zoom, setZoom] = useState(12);
 
-  // the last set route details, but is not reset on clicking CLEAR ROUTE button
+  // captures the most updated route details, but is not reset on clicking CLEAR ROUTE button
   const [latestRouteDetails, setLatestRouteDetails] = useState({
     duration: null,
     distanceMeters: null,
