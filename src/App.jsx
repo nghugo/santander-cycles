@@ -15,6 +15,7 @@ function App() {
   const [stations, setStations] = useState([]);
   const [cycleLastUpdatedEpoch, setCycleLastUpdatedEpoch] = useState(null);
   const [searchedLatLng, setSearchedLatLng] = useState(null);
+  const [cycleFetchVersion, setCycleFetchVersion] = useState(0)
 
   const stationNamesSorted = stations.map((station) => station.name).sort();
 
@@ -52,6 +53,7 @@ function App() {
   };
 
   useEffect(() => {
+    // fetch santander cycle details
     fetch(
       "https://tfl.gov.uk/tfl/syndication/feeds/cycle-hire/livecyclehireupdates.xml"
     )
@@ -93,7 +95,7 @@ function App() {
         );
       })
       .catch((error) => console.error(error));
-  }, [stations.toString(), cycleLastUpdatedEpoch]);
+  }, [cycleFetchVersion]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -122,6 +124,8 @@ function App() {
                 getOnInputChange={getOnInputChange}
                 isInvalidInput={isInvalidInput}
                 cycleLastUpdatedEpoch={cycleLastUpdatedEpoch}
+                cycleFetchVersion={cycleFetchVersion}
+                setCycleFetchVersion={setCycleFetchVersion}
               />
             </Grid>
             <Grid item xs={12} md={8}>

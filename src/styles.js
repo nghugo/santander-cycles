@@ -1,5 +1,6 @@
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
+const createColor = (mainColor) => augmentColor({ color: { main: mainColor } });
 export const theme = responsiveFontSizes(
   createTheme({
     components: {
@@ -18,6 +19,9 @@ export const theme = responsiveFontSizes(
       secondary: {
         main: "#FF5722",
       },
+      custom1: {
+        main: "#008394"
+      }
     },
     typography: {
       h5: {

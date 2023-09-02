@@ -7,10 +7,10 @@ import {
   Button,
   Grid,
 } from "@mui/material";
-import DirectionsIcon from '@mui/icons-material/Directions';
-import DeleteIcon from '@mui/icons-material/Delete';
+import DirectionsIcon from "@mui/icons-material/Directions";
+import DeleteIcon from "@mui/icons-material/Delete";
+import RefreshIcon from "@mui/icons-material/Refresh";
 import StationCard from "./StationCard";
-
 
 function StationNameField({
   label,
@@ -55,18 +55,18 @@ function StationDetails({
   getOnInputChange,
   isInvalidInput,
   cycleLastUpdatedEpoch,
+  cycleFetchVersion,
+  setCycleFetchVersion,
 }) {
   const originStation =
     stations.length > 0
       ? stations.find((entry) => entry.name === values["origin"])
       : null;
-  console.log(originStation);
 
   const destinationStation =
     stations.length > 0
       ? stations.find((entry) => entry.name === values["destination"])
       : null;
-  console.log(destinationStation);
 
   return (
     <>
@@ -94,8 +94,8 @@ function StationDetails({
             type="button"
             onClick={() => setSubmitted(true)}
             variant="contained"
-            sx={{ width: "180px", mb: 1, mr: 1, fontWeight: 600 }}
-            startIcon={<DirectionsIcon/>}
+            sx={{ width: "190px", mb: 1, mr: 1, fontWeight: 600 }}
+            startIcon={<DirectionsIcon />}
           >
             Set Route
           </Button>
@@ -108,32 +108,46 @@ function StationDetails({
             }}
             variant="contained"
             color="secondary"
-            sx={{ width: "180px", mb: 1, mr: 1, fontWeight: 600 }}
-            startIcon={<DeleteIcon/>}
+            sx={{ width: "190px", mb: 1, mr: 1, fontWeight: 600 }}
+            startIcon={<DeleteIcon />}
           >
             Clear Route
           </Button>
         </Box>
       </Box>
 
-      <Grid container spacing={2} sx={{mb: 3}}>
+      <Grid container spacing={2} sx={{ mb: 3 }}>
         <Grid item xs={12} sm={6} md={12} xl={6}>
-          <StationCard station={originStation} prefix="Origin"/>
+          <StationCard station={originStation} prefix="Origin" />
         </Grid>
         <Grid item xs={12} sm={6} md={12} xl={6}>
-          <StationCard station={destinationStation}  prefix="Destination"/>
+          <StationCard station={destinationStation} prefix="Destination" />
         </Grid>
       </Grid>
 
+      <div>
+        <Button
+          type="button"
+          onClick={() => setCycleFetchVersion(cycleFetchVersion + 1)}
+          variant="contained"
+          sx={{ width: "190px", mb: 1, mr: 1, fontWeight: 600, color: "white" }}
+          startIcon={<RefreshIcon />}
+          color="custom1"
+        >
+          Refresh
+        </Button>
+      </div>
       
-
-      <button>REFRESH STATION AVAILABILITIES BUTTON</button>
-      <Typography variant="muted">
-        Stations last refreshed:{" "}
-        {cycleLastUpdatedEpoch
-          ? new Date(parseInt(cycleLastUpdatedEpoch)).toLocaleString("en-GB")
-          : "N/A"}
-      </Typography>
+      <div style={{display: "flex", flexWrap: "wrap", width: "100%", marginBottom: "16px"}}>
+        <Typography variant="muted" sx={{ m: 0, display: "inline"}}>
+          Stations last refreshed:{"\u00A0"}{"\u00A0"}{/* nbsp */}
+        </Typography>
+        <Typography variant="muted" sx={{ m: 0, display: "inline"}}>
+          {cycleLastUpdatedEpoch
+            ? new Date(parseInt(cycleLastUpdatedEpoch)).toLocaleString("en-GB")
+            : "N/A"}
+        </Typography>
+      </div>
     </>
   );
 }

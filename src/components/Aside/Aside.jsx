@@ -2,7 +2,7 @@ import { React } from "react";
 
 import StationDetails from "./StationDetails/StationDetails";
 import WeatherDetails from "./WeatherDetails/WeatherDetails";
-import {AsideContent} from "./styles"
+import { AsideContent } from "./styles";
 
 const Aside = ({
   setSubmitted,
@@ -13,6 +13,8 @@ const Aside = ({
   getOnInputChange,
   isInvalidInput,
   cycleLastUpdatedEpoch,
+  cycleFetchVersion,
+  setCycleFetchVersion,
 }) => {
   return (
     <AsideContent>
@@ -26,6 +28,8 @@ const Aside = ({
         getOnInputChange={getOnInputChange}
         isInvalidInput={isInvalidInput}
         cycleLastUpdatedEpoch={cycleLastUpdatedEpoch}
+        cycleFetchVersion={cycleFetchVersion}
+        setCycleFetchVersion={setCycleFetchVersion}
       />
     </AsideContent>
   );
