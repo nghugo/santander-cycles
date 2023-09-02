@@ -1,13 +1,14 @@
-import { useState, useEffect } from "react";
-import { CssBaseline } from "@mui/material";
-import { Grid, Box } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
+import { CssBaseline } from "@mui/material";
 
+import { useState, useEffect } from "react";
+import { Grid, Box } from "@mui/material";
+
+import { theme } from "./styles.js";
 import Header from "./components/Header/Header";
 import Aside from "./components/Aside/Aside";
 import Map from "./components/Map/Map";
 import SearchBar from "./components/SearchBar/SearchBar";
-import { theme } from "./styles.js";
 
 function App() {
   const [submitted, setSubmitted] = useState(false);

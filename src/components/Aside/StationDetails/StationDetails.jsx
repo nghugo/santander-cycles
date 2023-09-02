@@ -6,6 +6,7 @@ import {
   Box,
   Button,
   Grid,
+  Paper,
 } from "@mui/material";
 import DirectionsIcon from "@mui/icons-material/Directions";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -69,7 +70,7 @@ function StationDetails({
       : null;
 
   return (
-    <>
+    <Paper elevation={2} sx={{p: 2, mb:2}}>
       <Typography variant="h5">Station Details</Typography>
 
       <Box component="form" noValidate autoComplete="off">
@@ -143,7 +144,7 @@ function StationDetails({
           display: "flex",
           flexWrap: "wrap",
           width: "100%",
-          marginBottom: "32px",
+          marginBottom: "8px",
         }}
       >
         <Typography variant="muted" sx={{ m: 0, display: "inline" }}>
@@ -166,7 +167,7 @@ function StationDetails({
             : "N/A"}
         </Typography>
       </div>
-    </>
+    </Paper>
   );
 }
 

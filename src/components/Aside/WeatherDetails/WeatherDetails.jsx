@@ -1,10 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Typography, Card, CircularProgress } from "@mui/material";
+import { Typography, Card, CircularProgress, Paper } from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
 import Cookies from "universal-cookie";
 
 import Toggler from "./Toggler";
+import SettingsPopper from "./SettingsPopper";
 
 const cookies = new Cookies();
 
@@ -37,36 +38,43 @@ function WeatherDetails() {
   }, [weatherFetchVersion]);
 
   return (
-    <>
-      <Typography variant="h5">Weather Details</Typography>
+    <Paper elevation={2} sx={{ p: 2, mb:2 }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="h5">Weather Details</Typography>
+        <SettingsPopper />
+      </div>
 
-      <Card elevation={1} sx={{ p: 1 }}>
-        {/* Display rotating circle when weather is still loading */}
-        {!weather && (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              minHeight: "180px",
-            }}
-          >
-            <CircularProgress />
-          </div>
-        )}
+      {/* Display rotating circle when weather is still loading */}
+      {!weather && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "180px",
+          }}
+        >
+          <CircularProgress />
+        </div>
+      )}
 
-        {/* Display weather information when weather has finished loading */}
-        {weather && (
-          <div>
-            <p>Current temperature: {weather.current.temp_c}</p>
-            <Toggler state={celcius} setState={setCelcius}>
-                <ToggleButton value="1">Celcius</ToggleButton>
-                <ToggleButton value="0">Fahrenheit</ToggleButton>
-            </Toggler>
-          </div>
-        )}
-      </Card>
-    </>
+      {/* Display weather information when weather has finished loading */}
+      {weather && (
+        <div>
+          <p>Current temperature: {weather.current.temp_c}</p>
+          <Toggler state={celcius} setState={setCelcius}>
+            <ToggleButton value="1">Celcius</ToggleButton>
+            <ToggleButton value="0">Fahrenheit</ToggleButton>
+          </Toggler>
+        </div>
+      )}
+    </Paper>
   );
 }
 
