@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { CssBaseline, Grid } from "@mui/material";
-import Box from "@mui/material/Box";
+import { CssBaseline } from "@mui/material";
+import { Grid, Box } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 
 import Header from "./components/Header/Header";
@@ -15,7 +15,7 @@ function App() {
   const [stations, setStations] = useState([]);
   const [cycleLastUpdatedEpoch, setCycleLastUpdatedEpoch] = useState(null);
   const [searchedLatLng, setSearchedLatLng] = useState(null);
-  const [cycleFetchVersion, setCycleFetchVersion] = useState(0)
+  const [cycleFetchVersion, setCycleFetchVersion] = useState(0);
 
   const stationNamesSorted = stations.map((station) => station.name).sort();
 
@@ -129,10 +129,10 @@ function App() {
               />
             </Grid>
             <Grid item xs={12} md={8}>
-              <Box sx={{ height: "90px"}}>
+              <Box sx={{ height: "90px" }}>
                 <SearchBar
-                searchedLatLng={searchedLatLng}
-                setSearchedLatLng={setSearchedLatLng}
+                  searchedLatLng={searchedLatLng}
+                  setSearchedLatLng={setSearchedLatLng}
                 />
               </Box>
 

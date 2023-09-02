@@ -143,7 +143,7 @@ function StationDetails({
           display: "flex",
           flexWrap: "wrap",
           width: "100%",
-          marginBottom: "16px",
+          marginBottom: "32px",
         }}
       >
         <Typography variant="muted" sx={{ m: 0, display: "inline" }}>

@@ -199,7 +199,7 @@ const Map = ({ stations, routeSubmittedAndValid, values, searchedLatLng }) => {
         </RouteBannerContainer>
       )}
 
-      {/* Display rotating roading circle when map is still loading */}
+      {/* Display rotating circle when map is still loading */}
       {!mapref.current && (
         <CircularProgress
           sx={{
