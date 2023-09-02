@@ -9,10 +9,11 @@ import SettingsPopper from "./SettingsPopper";
 const cookies = new Cookies();
 
 function WeatherDetails() {
-  cookies.set("celcius", true, { path: "/" });
+  cookies.set("celsius", true, { path: "/" });
   const [weather, setWeather] = useState(null);
 
-  const [celcius, setCelcius] = useState("1"); // use string, as cookies are stored as string
+  const [celsius, setCelsius] = useState("1"); // use string, as cookies are stored as string
+  const [metric, setMetric] = useState("1"); // use string, as cookies are stored as string
   const [weatherFetchVersion, setWeatherFetchVersion] = useState(0);
 
   useEffect(() => {
@@ -45,8 +46,14 @@ function WeatherDetails() {
           alignItems: "center",
         }}
       >
-        <Typography variant="h5">Weather Details</Typography>
-        <SettingsPopper celcius={celcius} setCelcius={setCelcius}/>
+        <Typography variant="h5">London Weather</Typography>
+        <SettingsPopper
+          celsius={celsius}
+          setCelsius={setCelsius}
+          metric={metric}
+          setMetric={setMetric}
+        />{" "}
+        {/* popper */}
       </div>
 
       {/* Display rotating circle when weather is still loading */}
@@ -66,12 +73,55 @@ function WeatherDetails() {
       {/* Display weather information when weather has finished loading */}
       {weather && (
         <div>
-          <p>Current temperature: {celcius==="1" ? weather.current.temp_c : weather.current.temp_f}</p>
-          <p>{weather.current.temp_c}</p>
-          <p>{weather.current.temp_f}</p>
+          <p>{weather.current.condition.text}</p>
+          <img src={weather.current.condition.icon} />
+          <p>
+            Local Time (Last Refreshed):{" "}
+            {new Date(
+              parseInt(weather.location.localtime_epoch) * 1000 // convert seconds to milliseconds
+            ).toLocaleString("en-GB", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </p>
+          <p>
+            Temperature:{" "}
+            {celsius === "1"
+              ? weather.current.temp_c + "°C"
+              : weather.current.temp_f + "°F"}
+          </p>
+          <p>
+            Feels Like:{" "}
+            {celsius === "1"
+              ? weather.current.feelslike_c + "°C"
+              : weather.current.feelslike_f + "°F"}
+          </p>
+          <p>
+            Precipitation:{" "}
+            {metric === "1"
+              ? weather.current.precip_mm + " mm"
+              : weather.current.precip_in + " inches"}
+          </p>
+          <p>Humidity:{" "}
+          {weather.current.humidity + "%"}
+          </p>
+          <p>
+            Wind Speed:{" "}
+            {metric === "1"
+              ? weather.current.wind_kph + " km/h"
+              : weather.current.wind_mph + " miles/h"}
+          </p>
+          <p>
+            Visibility:{" "}
+            {metric === "1"
+              ? weather.current.vis_km + " km"
+              : weather.current.vis_miles + " miles"}
+          </p>
         </div>
       )}
-      
     </Paper>
   );
 }

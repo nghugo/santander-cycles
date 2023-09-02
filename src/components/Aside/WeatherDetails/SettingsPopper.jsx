@@ -1,11 +1,17 @@
 import React from "react";
 import { useState } from "react";
-import { Box, Popper, IconButton } from "@mui/material";
+import { Card, Popper, IconButton } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ToggleButton from "@mui/material/ToggleButton";
 import Toggler from "./Toggler";
 
-export default function SettingsPopper({celcius, setCelcius}) {
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+
+export default function SettingsPopper({ celsius, setCelsius, metric, setMetric }) {
+  const theme = useTheme();
+  const aboveSm = useMediaQuery(theme.breakpoints.up("sm"));
+  
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
@@ -27,12 +33,30 @@ export default function SettingsPopper({celcius, setCelcius}) {
           <SettingsIcon />
         </IconButton>
         <Popper id={id} open={open} anchorEl={anchorEl} placement="bottom-end">
-          <Box sx={{ border: 1, p: 1, bgcolor: "background.paper" }}>
-            <Toggler state={celcius} setState={setCelcius}>
-              <ToggleButton value="1">Celcius</ToggleButton>
-              <ToggleButton value="0">Fahrenheit</ToggleButton>
+          <Card
+            elevation={24}
+            sx={{
+              px: {xs:1, sm:3},
+              py: {xs:1, sm:1.5},
+              bgcolor: "background.paper",
+              outline: "1px solid slategrey",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              alignItems: "center",
+              rowGap: 1.5,
+              minWidth: {xs: "200px", sm: "350px"},
+            }}
+          >
+            <Toggler state={celsius} setstate={setCelsius} sx={{width: "100%"}} orientation={aboveSm ? "horizontal" : "vertical"}>
+              <ToggleButton value="1" sx={{width: {xs: "100%", sm: "50%"}}}>Celsius</ToggleButton>
+              <ToggleButton value="0" sx={{width: {xs: "100%", sm: "50%"}}}>Fahrenheit</ToggleButton>
             </Toggler>
-          </Box>
+            <Toggler state={metric} setstate={setMetric} sx={{width: "100%"}} orientation={aboveSm ? "horizontal" : "vertical"}>
+              <ToggleButton value="1" sx={{width: {xs: "100%", sm: "50%"}}}>Metric</ToggleButton>
+              <ToggleButton value="0" sx={{width: {xs: "100%", sm: "50%"}}}>Imperial</ToggleButton>
+            </Toggler>
+          </Card>
         </Popper>
       </div>
     </>

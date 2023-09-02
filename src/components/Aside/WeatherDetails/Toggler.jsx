@@ -1,16 +1,16 @@
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import ToggleButton from "@mui/material/ToggleButton";
 
 const Toggler = (props) => {
   const handleChange = (event, newState) => {
     // only set state if not null
     if (newState !== null) {
-      props.setState(newState);
+      props.setstate(newState);
     }
   };
 
   return (
     <ToggleButtonGroup
+      {...props}
       color="primary"
       value={props.state}
       exclusive
