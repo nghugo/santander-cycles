@@ -5,9 +5,6 @@ const Toggler = (props) => {
   const handleChange = (event, newState) => {
     // only set state if not null
     if (newState !== null) {
-      console.log(newState);
-      console.log(props.setState.isPrototypeOf());
-
       props.setState(newState);
     }
   };
