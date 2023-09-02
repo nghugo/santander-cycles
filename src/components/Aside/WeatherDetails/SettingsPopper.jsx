@@ -48,11 +48,11 @@ export default function SettingsPopper({ celsius, setCelsius, metric, setMetric 
               minWidth: {xs: "200px", sm: "350px"},
             }}
           >
-            <Toggler state={celsius} setstate={setCelsius} sx={{width: "100%"}} orientation={aboveSm ? "horizontal" : "vertical"}>
+            <Toggler localStorageItemKey="celsius" state={celsius} setstate={setCelsius} sx={{width: "100%"}} orientation={aboveSm ? "horizontal" : "vertical"}>
               <ToggleButton value="1" sx={{width: {xs: "100%", sm: "50%"}}}>Celsius</ToggleButton>
               <ToggleButton value="0" sx={{width: {xs: "100%", sm: "50%"}}}>Fahrenheit</ToggleButton>
             </Toggler>
-            <Toggler state={metric} setstate={setMetric} sx={{width: "100%"}} orientation={aboveSm ? "horizontal" : "vertical"}>
+            <Toggler localStorageItemKey="metric" state={metric} setstate={setMetric} sx={{width: "100%"}} orientation={aboveSm ? "horizontal" : "vertical"}>
               <ToggleButton value="1" sx={{width: {xs: "100%", sm: "50%"}}}>Metric</ToggleButton>
               <ToggleButton value="0" sx={{width: {xs: "100%", sm: "50%"}}}>Imperial</ToggleButton>
             </Toggler>

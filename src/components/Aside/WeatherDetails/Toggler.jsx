@@ -5,6 +5,7 @@ const Toggler = (props) => {
     // only set state if not null
     if (newState !== null) {
       props.setstate(newState);
+      window.localStorage.setItem(props.localStorageItemKey, newState)
     }
   };
 

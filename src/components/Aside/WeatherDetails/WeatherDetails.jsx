@@ -9,11 +9,7 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import RefreshIcon from "@mui/icons-material/Refresh";
 
-import Cookies from "universal-cookie";
-
 import SettingsPopper from "./SettingsPopper";
-
-const cookies = new Cookies();
 
 function getUvCategory(index) {
   if (index <= 2) {
@@ -38,11 +34,13 @@ const Flexdiv = (props) => {
 };
 
 function WeatherDetails() {
-  cookies.set("celsius", true, { path: "/" });
   const [weather, setWeather] = useState(null);
 
-  const [celsius, setCelsius] = useState("1"); // use string, as cookies are stored as string
-  const [metric, setMetric] = useState("1"); // use string, as cookies are stored as string
+  const celsiusStored = window.localStorage.getItem("celsius")
+  const metricStored = window.localStorage.getItem("metric")
+
+  const [celsius, setCelsius] = useState(celsiusStored ? celsiusStored : "1"); // use string, as localStorage stores as string
+  const [metric, setMetric] = useState(metricStored ? metricStored : "1"); // use string, as localStorage stores as string
   const [weatherFetchVersion, setWeatherFetchVersion] = useState(0);
 
   useEffect(() => {
