@@ -28,7 +28,7 @@ export const FlexAppBar = (props) => (
   <AppBar
     position="static"
     sx={{
-      px: { xs: 1, sm: 2 },
+      px: 2,
       py: 1,
       display: "flex",
       flexDirection: "row",

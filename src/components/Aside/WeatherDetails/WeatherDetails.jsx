@@ -65,7 +65,7 @@ function WeatherDetails() {
   }, [weatherFetchVersion]);
 
   return (
-    <Paper elevation={3} sx={{ p: 2, mt: { xs: 3, md: 1 }, mb: 4 }}>
+    <Paper elevation={3} sx={{ p: {xs: 1, sm: 2}, mt: { xs: 3, md: 1 }, mb: 4 }}>
       <div
         style={{
           display: "flex",
