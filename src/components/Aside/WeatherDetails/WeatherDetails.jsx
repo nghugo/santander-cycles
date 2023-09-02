@@ -5,7 +5,8 @@ import AirOutlinedIcon from "@mui/icons-material/AirOutlined";
 import WaterDropOutlinedIcon from "@mui/icons-material/WaterDropOutlined";
 import GrainOutlinedIcon from "@mui/icons-material/GrainOutlined";
 import SentimentSatisfiedOutlinedIcon from "@mui/icons-material/SentimentSatisfiedOutlined";
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import RefreshIcon from "@mui/icons-material/Refresh";
 
 import Cookies from "universal-cookie";
@@ -13,6 +14,20 @@ import Cookies from "universal-cookie";
 import SettingsPopper from "./SettingsPopper";
 
 const cookies = new Cookies();
+
+function getUvCategory(index) {
+  if (index <= 2) {
+    return "Low";
+  } else if (index <= 5) {
+    return "Moderate";
+  } else if (index <= 7) {
+    return "High";
+  } else if (index <= 10) {
+    return "Very high";
+  } else {
+    return "Extreme";
+  }
+}
 
 const Flexdiv = (props) => {
   return (
@@ -106,49 +121,67 @@ function WeatherDetails() {
                 : weather.current.temp_f + "°F"}
             </Typography>
           </div>
-          <div style={{ marginBottom: "6px" }}>
-            <Flexdiv>
-              <SentimentSatisfiedOutlinedIcon />
-              <Typography variant="body5">
-                Feels like{" "}
-                {celsius === "1"
-                  ? weather.current.feelslike_c + "°C"
-                  : weather.current.feelslike_f + "°F"}
-              </Typography>
-            </Flexdiv>
-            <Flexdiv>
-              <GrainOutlinedIcon />
-              <Typography variant="body5">
-                Precipitation:{" "}
-                {metric === "1"
-                  ? weather.current.precip_mm + " mm"
-                  : weather.current.precip_in + " inches"}
-              </Typography>
-            </Flexdiv>
-            <Flexdiv>
-              <WaterDropOutlinedIcon />
-              <Typography variant="body5">
-                Humidity: {weather.current.humidity + "%"}
-              </Typography>
-            </Flexdiv>
-            <Flexdiv>
-              <AirOutlinedIcon />
-              <Typography variant="body5">
-                Wind speed:{" "}
-                {metric === "1"
-                  ? weather.current.wind_kph + " km/h"
-                  : weather.current.wind_mph + " miles/h"}
-              </Typography>
-            </Flexdiv>
-            <Flexdiv>
-              <VisibilityOutlinedIcon />
-              <Typography variant="body5">
-                Visibility:{" "}
-                {metric === "1"
-                  ? weather.current.vis_km + " km"
-                  : weather.current.vis_miles + " miles"}
-              </Typography>
-            </Flexdiv>
+          <div
+            style={{
+              marginBottom: "6px",
+              display: "flex",
+              flexWrap: "wrap",
+              columnGap: "20px",
+            }}
+          >
+            <div>
+              <Flexdiv>
+                <SentimentSatisfiedOutlinedIcon />
+                <Typography variant="body5">
+                  Feels like{" "}
+                  {celsius === "1"
+                    ? weather.current.feelslike_c + "°C"
+                    : weather.current.feelslike_f + "°F"}
+                </Typography>
+              </Flexdiv>
+              <Flexdiv>
+                <GrainOutlinedIcon />
+                <Typography variant="body5">
+                  Precipitation:{" "}
+                  {metric === "1"
+                    ? weather.current.precip_mm + " mm"
+                    : weather.current.precip_in + " inches"}
+                </Typography>
+              </Flexdiv>
+              <Flexdiv>
+                <WaterDropOutlinedIcon />
+                <Typography variant="body5">
+                  Humidity: {weather.current.humidity + "%"}
+                </Typography>
+              </Flexdiv>
+            </div>
+            <div>
+              <Flexdiv>
+                <AirOutlinedIcon />
+                <Typography variant="body5">
+                  Wind speed:{" "}
+                  {metric === "1"
+                    ? weather.current.wind_kph + " km/h"
+                    : weather.current.wind_mph + " miles/h"}
+                </Typography>
+              </Flexdiv>
+              <Flexdiv>
+                <VisibilityOutlinedIcon />
+                <Typography variant="body5">
+                  Visibility:{" "}
+                  {metric === "1"
+                    ? weather.current.vis_km + " km"
+                    : weather.current.vis_miles + " miles"}
+                </Typography>
+              </Flexdiv>
+              <Flexdiv>
+                <LightModeOutlinedIcon />
+                <Typography variant="body5">
+                  UV index: {weather.current.uv} (
+                  {getUvCategory(weather.current.uv)})
+                </Typography>
+              </Flexdiv>
+            </div>
           </div>
           <div>
             <Button
@@ -168,19 +201,30 @@ function WeatherDetails() {
               Refresh
             </Button>
           </div>
-          <Typography variant="muted">
-            Weather last refreshed:{" "}
-            {new Date(
-              parseInt(weather.location.localtime_epoch) * 1000 // convert seconds to milliseconds
-            ).toLocaleString("en-GB", {
-              year: "numeric",
-              month: "short",
-              day: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-            })}{" "}
-            (local time)
-          </Typography>
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              width: "100%",
+              marginTop: "4px",
+              marginBottom: "4px",
+            }}
+          >
+            <Typography variant="muted">
+              Weather last refreshed (server updates every 5 minutes):{"\u00A0"}
+            </Typography>
+            <Typography variant="muted">
+              {new Date(
+                parseInt(weather.location.localtime_epoch) * 1000 // convert seconds to milliseconds
+              ).toLocaleString("en-GB", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+              })}{" "}
+            </Typography>
+          </div>
         </div>
       )}
     </Paper>

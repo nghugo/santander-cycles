@@ -27,6 +27,7 @@ export const theme = responsiveFontSizes(
       h5: {
         fontWeight: 600,
         fontSize: "22px",
+        marginBottom: "16px"
       },
       subtitle1: {
         fontWeight: 600,
@@ -58,7 +59,7 @@ export const theme = responsiveFontSizes(
       muted: {
         fontSize: 16,
         color: "slategrey",
-        display: "block",
+        display: "inline",
       },
       muted2: {
         fontSize: 13,

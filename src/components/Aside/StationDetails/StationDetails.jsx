@@ -144,15 +144,14 @@ function StationDetails({
           display: "flex",
           flexWrap: "wrap",
           width: "100%",
-          marginBottom: "8px",
+          marginTop: "4px",
+          marginBottom: "4px",
         }}
       >
-        <Typography variant="muted" sx={{ m: 0, display: "inline" }}>
-          Stations last refreshed:{"\u00A0"}
-          {"\u00A0"}
-          {/* nbsp */}
+        <Typography variant="muted">
+          Stations last refreshed (server updates every minute):{"\u00A0"}
         </Typography>
-        <Typography variant="muted" sx={{ m: 0, display: "inline" }}>
+        <Typography variant="muted">
           {cycleLastUpdatedEpoch
             ? new Date(parseInt(cycleLastUpdatedEpoch)).toLocaleString(
                 "en-GB",
