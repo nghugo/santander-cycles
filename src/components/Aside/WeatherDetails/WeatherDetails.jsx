@@ -9,7 +9,7 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import RefreshIcon from "@mui/icons-material/Refresh";
 
-import SettingsPopper from "./SettingsPopper";
+import SettingsPopover from "./SettingsPopover";
 
 function getUvCategory(index) {
   if (index <= 2) {
@@ -74,13 +74,13 @@ function WeatherDetails() {
         }}
       >
         <Typography variant="h5">London Weather</Typography>
-        <SettingsPopper
+        <SettingsPopover
           celsius={celsius}
           setCelsius={setCelsius}
           metric={metric}
           setMetric={setMetric}
         />{" "}
-        {/* popper */}
+        {/* popover */}
       </div>
 
       {/* Display rotating circle when weather is still loading */}
