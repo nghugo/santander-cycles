@@ -20,7 +20,7 @@ export const theme = responsiveFontSizes(
         main: "#FF5722",
       },
       custom1: {
-        main: "#008394"
+        main: "#FFA000"
       }
     },
     typography: {

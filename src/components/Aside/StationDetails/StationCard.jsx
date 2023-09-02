@@ -4,7 +4,7 @@ import { Card, Typography, Icon } from "@mui/material";
 const StationCard = ({ station, prefix }) => {
   if (!station) {
     return (
-      <Card elevation={3} sx={{ p: 1, height: "100%" }}>
+      <Card elevation={1} sx={{ p: 1, height: "100%" }}>
         <div>
           <Typography variant="subtitle2" sx={{ fontSize: 16 }}>
             {prefix}
@@ -19,7 +19,7 @@ const StationCard = ({ station, prefix }) => {
 
   return (
     <Card
-      elevation={3}
+      elevation={1}
       sx={{
         p: 1,
         height: "100%",

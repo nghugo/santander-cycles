@@ -137,14 +137,32 @@ function StationDetails({
           Refresh
         </Button>
       </div>
-      
-      <div style={{display: "flex", flexWrap: "wrap", width: "100%", marginBottom: "16px"}}>
-        <Typography variant="muted" sx={{ m: 0, display: "inline"}}>
-          Stations last refreshed:{"\u00A0"}{"\u00A0"}{/* nbsp */}
+
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          width: "100%",
+          marginBottom: "16px",
+        }}
+      >
+        <Typography variant="muted" sx={{ m: 0, display: "inline" }}>
+          Stations last refreshed:{"\u00A0"}
+          {"\u00A0"}
+          {/* nbsp */}
         </Typography>
-        <Typography variant="muted" sx={{ m: 0, display: "inline"}}>
+        <Typography variant="muted" sx={{ m: 0, display: "inline" }}>
           {cycleLastUpdatedEpoch
-            ? new Date(parseInt(cycleLastUpdatedEpoch)).toLocaleString("en-GB")
+            ? new Date(parseInt(cycleLastUpdatedEpoch)).toLocaleString(
+                "en-GB",
+                {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                }
+              )
             : "N/A"}
         </Typography>
       </div>
