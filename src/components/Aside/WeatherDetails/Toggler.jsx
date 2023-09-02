@@ -10,7 +10,8 @@ const Toggler = (props) => {
 
   return (
     <ToggleButtonGroup
-      {...props}
+      sx={props.sx}
+      orientation={props.orientation}
       color="primary"
       value={props.state}
       exclusive

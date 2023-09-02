@@ -32,6 +32,7 @@ export const FlexAppBar = (props) => (
       py: 1,
       display: "flex",
       flexDirection: "row",
+      zIndex: "1",
     }}
     elevation={2}
   >
