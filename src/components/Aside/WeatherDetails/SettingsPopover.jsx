@@ -38,6 +38,9 @@ export default function SettingsPopover({
           aria-label="weather settings"
           color="primary"
           onClick={handleClick}
+          sx={{
+            pt: 0
+          }}
         >
           <SettingsIcon />
         </IconButton>

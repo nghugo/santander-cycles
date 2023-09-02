@@ -70,7 +70,7 @@ function WeatherDetails() {
         style={{
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "center",
+          alignItems: "start",
         }}
       >
         <Typography variant="h5">London Weather</Typography>
