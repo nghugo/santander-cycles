@@ -117,7 +117,7 @@ function StationDetails({
         </Box>
       </Box>
 
-      <Grid container spacing={2} sx={{ mb: 3 }}>
+      <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={12} xl={6}>
           <StationCard station={originStation} prefix="Origin" />
         </Grid>
@@ -131,7 +131,7 @@ function StationDetails({
           type="button"
           onClick={() => setCycleFetchVersion(cycleFetchVersion + 1)}
           variant="contained"
-          sx={{ width: "190px", mb: 1, mr: 1, fontWeight: 600, color: "white" }}
+          sx={{ width: "190px", mb: 1, mr: 1, mt: 2, fontWeight: 600, color: "white" }}
           startIcon={<RefreshIcon />}
           color="custom1"
         >
