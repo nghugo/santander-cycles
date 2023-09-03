@@ -227,7 +227,7 @@ const Map = ({ stations, routeSubmittedAndValid, values, searchedLatLng }) => {
           mapref.current = map;
           map.setOptions({
             clickableIcons: false,
-            fullscreenControl: false,
+            fullscreenControl: true,
           });
         }}
         onChange={({ zoom, bounds }) => {
