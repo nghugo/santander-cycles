@@ -15,17 +15,17 @@ export default function PopoverMarker(props) {
   };
 
   const handleMouseUpOrTouchEnd = (e) => {
-    e.preventDefault() // allows touch to be treated as click
+    if (e.cancelable) {
+      e.preventDefault() // allows touch to be treated as click, without affecting scroll
+    }
     var diffX;
     var diffY;
     if (e.type === "touchend") {
       diffX = Math.abs(e.changedTouches[0].clientX - startX);
       diffY = Math.abs(e.changedTouches[0].clientY - startY);
-      console.log('* touchend (mobile) event *')
     } else {
       diffX = Math.abs(e.pageX - startX);
       diffY = Math.abs(e.pageY - startY);
-      console.log('* clickend event *')
     }
     if (diffX < DELTA && diffY < DELTA) {
       handleClickNotDrag(e);
@@ -33,8 +33,6 @@ export default function PopoverMarker(props) {
   };
 
   const handleClickNotDrag = (event) => {
-    console.log("click detected")
-    console.log(event.currentTarget)
     setAnchorEl(event.currentTarget);
   };
 
