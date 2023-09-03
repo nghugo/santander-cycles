@@ -15,14 +15,17 @@ export default function PopoverMarker(props) {
   };
 
   const handleMouseUpOrTouchEnd = (e) => {
+    e.preventDefault() // allows touch to be treated as click
     var diffX;
     var diffY;
     if (e.type === "touchend") {
       diffX = Math.abs(e.changedTouches[0].clientX - startX);
       diffY = Math.abs(e.changedTouches[0].clientY - startY);
+      console.log('* touchend (mobile) event *')
     } else {
       diffX = Math.abs(e.pageX - startX);
       diffY = Math.abs(e.pageY - startY);
+      console.log('* clickend event *')
     }
     if (diffX < DELTA && diffY < DELTA) {
       handleClickNotDrag(e);
@@ -61,7 +64,6 @@ export default function PopoverMarker(props) {
       >
         <img
           width="20"
-          // src="src/assets/images/bike_pin.png"
           src="/images/bike_pin.png"
         ></img>
       </div>
