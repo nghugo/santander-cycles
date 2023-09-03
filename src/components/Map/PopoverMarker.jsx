@@ -78,6 +78,7 @@ export default function PopoverMarker(props) {
           vertical: "bottom",
           horizontal: "center",
         }}
+        disableAutoFocus
       >
         <ClickAwayListener
           onClickAway={() => setAnchorEl(null)}

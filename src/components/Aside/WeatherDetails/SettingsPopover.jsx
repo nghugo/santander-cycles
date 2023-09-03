@@ -57,6 +57,7 @@ export default function SettingsPopover({
             horizontal: "left",
           }}
           onClose={handleClose}
+          disableAutoFocus
         >
           <ClickAwayListener
             onClickAway={() => setAnchorEl(null)}
