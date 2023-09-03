@@ -28,7 +28,7 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
         fetch(
           "https://api.locationiq.com/v1/autocomplete?" +
             new URLSearchParams({
-              // key: import.meta.env.VITE_LOCATION_IQ_API_KEY,
+              key: import.meta.env.VITE_LOCATION_IQ_API_KEY,
               countrycodes: "gb",
               format: "json",
               q: searchTerm,
