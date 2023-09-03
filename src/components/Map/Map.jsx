@@ -49,7 +49,7 @@ import { ClusterElement, ClusterText } from "./Cluster";
     ? console.warn(p + " only loads once. Ignoring:", g)
     : (d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)));
 })({
-  key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+  // key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
   v: "weekly",
 });
 
@@ -215,7 +215,7 @@ const Map = ({ stations, routeSubmittedAndValid, values, searchedLatLng }) => {
       )}
 
       <GoogleMapReact
-        bootstrapURLKeys={{ key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY }}
+        // bootstrapURLKeys={{ key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY }}
         defaultCenter={{ lat: 51.509865, lng: -0.118092 }} // London center coordinates
         center={
           searchedLatLng ? searchedLatLng : { lat: 51.509865, lng: -0.118092 }

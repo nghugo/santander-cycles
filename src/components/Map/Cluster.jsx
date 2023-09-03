@@ -7,19 +7,28 @@ export function ClusterElement(props) {
   // separate mouse up vs down to distinguish between click vs drag
   const DELTA = 6;
 
-  const handleMouseDown = (event) => {
-    setStartX(event.pageX);
-    setStartY(event.pageY);
+  const handleMouseDownOrTouchStart = (e) => {
+    setStartX(e.type === "touchstart" ? e.touches[0].clientX : e.pageX);
+    setStartY(e.type === "touchstart" ? e.touches[0].clientY : e.pageY);
   };
 
-  const handleMouseUp = (event) => {
-    const diffX = Math.abs(event.pageX - startX);
-    const diffY = Math.abs(event.pageY - startY);
+  const handleMouseUpOrTouchEnd = (e) => {
+    var diffX
+    var diffY
+    if (e.type === 'touchend') {
+      diffX = Math.abs(e.changedTouches[0].clientX - startX);
+      diffY = Math.abs(e.changedTouches[0].clientY - startY);
+    } 
+    else {
+      diffX = Math.abs(e.pageX - startX);
+      diffY = Math.abs(e.pageY - startY);
+    }
     if (diffX < DELTA && diffY < DELTA) {
-      handleClick(event);
+      handleClickNotDrag(e);
     }
   };
-  const handleClick = (event) => {
+
+  const handleClickNotDrag = (event) => {
     const expansionZoom = Math.min(
       props.supercluster.getClusterExpansionZoom(props.clusterid),
       20
@@ -43,8 +52,10 @@ export function ClusterElement(props) {
         cursor: "pointer",
         zIndex: "1", // one level higher than regular elements
       }}
-      onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
+      onMouseDown={handleMouseDownOrTouchStart}
+      onTouchStart={handleMouseDownOrTouchStart}
+      onMouseUp={handleMouseUpOrTouchEnd}
+      onTouchEnd={handleMouseUpOrTouchEnd}
     >
       {props.children}
     </div>
