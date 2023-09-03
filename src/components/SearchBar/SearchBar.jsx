@@ -6,13 +6,14 @@ import {
   Autocomplete,
   Typography,
   Box,
+  ClickAwayListener,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [autocompleteValues, setAutocompleteValues] = useState([]);
-  const [isFocused, setIsFocused] = useState(false);
+  const [open, setOpen] = useState(false); // whether search bar popper is open
 
   const fullnames = autocompleteValues
     ? autocompleteValues.map((entry) => entry.fullname)
@@ -88,102 +89,139 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
   }, [searchTerm]);
 
   return (
-    <Autocomplete
-      id="search-bar"
-      filterOptions={(options) => options} // prevent Autocomplete from filtering options internally https://stackoverflow.com/questions/62323166/material-ui-autocomplete-not-updating-options
-      options={fullnames}
-      noOptionsText="No matching location"
-      onInputChange={(e, value) => {
-        setSearchTerm(value);
-      }}
-      // noOptionsText="No matching location"
-      onFocus={() => setIsFocused(true)}
-      onBlur={() => setIsFocused(false)}
-      value={searchTerm || ""}
-      sx={{mt:1}}
-      renderInput={(params) => {
-        return (
-          <TextField
-            {...params}
-            label="Search Location"
-            InputProps={{
-              ...params.InputProps,
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-            }}
-            style={{
-              width: "100%",
-            }}
-            color={searchedLatLng ? "success" : null}
-            focused={searchTerm !== ""}
-            error={searchTerm !== "" && !searchedLatLng && !isFocused}
-            helperText={
-              searchTerm && !searchedLatLng ? "Incomplete / Invalid input" : " "
-            }
-          />
-        );
-      }}
-      renderOption={(props, option) => {
-        const matchingAutocompleteValue = autocompleteValues.find(
-          (entry) => entry.fullname === option
-        );
+    <ClickAwayListener
+      onClickAway={() => setOpen(false)}
+      mouseEvent="onMouseDown"
+      touchEvent="onTouchStart"
+    >
+      <Autocomplete
+        id="search-bar"
+        open={open}
+        onOpen={() => setOpen(true)}
+        onClose={() => setOpen(false)}
+        filterOptions={(options) => options} // prevent Autocomplete from filtering options internally https://stackoverflow.com/questions/62323166/material-ui-autocomplete-not-updating-options
+        options={fullnames}
+        noOptionsText="No matching location"
+        onInputChange={(e, value) => {
+          setSearchTerm(value);
+        }}
+        onFocus={() => setOpen(true)}
+        onBlur={() => setOpen(false)}
+        value={searchTerm || ""}
+        sx={{ mt: 1 }}
+        renderInput={(params) => {
+          return (
+            <TextField
+              {...params}
+              label="Search Location"
+              InputProps={{
+                ...params.InputProps,
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+              style={{
+                width: "100%",
+              }}
+              color={searchedLatLng ? "success" : null}
+              focused={searchTerm !== ""}
+              error={searchTerm !== "" && !searchedLatLng && !open}
+              helperText={
+                searchTerm && !searchedLatLng
+                  ? "Incomplete / Invalid input"
+                  : " "
+              }
+            />
+          );
+        }}
+        renderOption={(props, option) => {
+          const matchingAutocompleteValue = autocompleteValues.find(
+            (entry) => entry.fullname === option
+          );
 
-        const getValuecommaOrValueorEmptystring = (
-          matchingAutocompleteValue,
-          key
-        ) => {
-          if (key in matchingAutocompleteValue.addressObj) {
-            return (
-              <Typography
-                variant="body4"
-                sx={{
-                  "&::after": {
-                    content: '", "',
-                  },
-                  "&:last-of-type::after": {
-                    display: "none",
-                  },
-                }}
-              >
-                {matchingAutocompleteValue.addressObj[key]}
-              </Typography>
-            );
-          } else {
-            return null;
-          }
-        };
-
-        return (
-          <li {...props}>
-            <Box sx={{ display: "flex", flexDirection: "column", py: 0.5}}>
-              <div>
-                <Typography variant="body1" sx={{ fontSize: 18, fontWeight: 500, padding: 0, margin: 0, lineHeight: "18px", paddingBottom: "2px"}}>
-                  {matchingAutocompleteValue.addressObj.name}
+          const getValuecommaOrValueorEmptystring = (
+            matchingAutocompleteValue,
+            key
+          ) => {
+            if (key in matchingAutocompleteValue.addressObj) {
+              return (
+                <Typography
+                  variant="body4"
+                  sx={{
+                    "&::after": {
+                      content: '", "',
+                    },
+                    "&:last-of-type::after": {
+                      display: "none",
+                    },
+                  }}
+                >
+                  {matchingAutocompleteValue.addressObj[key]}
                 </Typography>
-              </div>
-              <div>
-              <div style={{paddingBottom: "2px", lineHeight: "16px"}}>
-                  {getValuecommaOrValueorEmptystring(matchingAutocompleteValue,"road")}
-                  {getValuecommaOrValueorEmptystring(matchingAutocompleteValue,"city")}
-                  {getValuecommaOrValueorEmptystring(matchingAutocompleteValue,"county")}
-                  {getValuecommaOrValueorEmptystring(matchingAutocompleteValue,"state")}
-                </div>
-                <div style={{padding: 0, lineHeight: "16px"}}>
-                  {getValuecommaOrValueorEmptystring(matchingAutocompleteValue,"postcode")}
-                  {getValuecommaOrValueorEmptystring(matchingAutocompleteValue,"country")}
-                </div>
-              </div>
+              );
+            } else {
+              return null;
+            }
+          };
 
-            </Box>
+          return (
+            <li {...props}>
+              <Box sx={{ display: "flex", flexDirection: "column", py: 0.5 }}>
+                <div>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      fontSize: 18,
+                      fontWeight: 500,
+                      padding: 0,
+                      margin: 0,
+                      lineHeight: "18px",
+                      paddingBottom: "2px",
+                    }}
+                  >
+                    {matchingAutocompleteValue.addressObj.name}
+                  </Typography>
+                </div>
+                <div>
+                  <div style={{ paddingBottom: "2px", lineHeight: "16px" }}>
+                    {getValuecommaOrValueorEmptystring(
+                      matchingAutocompleteValue,
+                      "road"
+                    )}
+                    {getValuecommaOrValueorEmptystring(
+                      matchingAutocompleteValue,
+                      "city"
+                    )}
+                    {getValuecommaOrValueorEmptystring(
+                      matchingAutocompleteValue,
+                      "county"
+                    )}
+                    {getValuecommaOrValueorEmptystring(
+                      matchingAutocompleteValue,
+                      "state"
+                    )}
+                  </div>
+                  <div style={{ padding: 0, lineHeight: "16px" }}>
+                    {getValuecommaOrValueorEmptystring(
+                      matchingAutocompleteValue,
+                      "postcode"
+                    )}
+                    {getValuecommaOrValueorEmptystring(
+                      matchingAutocompleteValue,
+                      "country"
+                    )}
+                  </div>
+                </div>
+              </Box>
 
-            {/* name road city county state postcode country */}
-          </li >
-        );
-      }}
-    />
+              {/* name road city county state postcode country */}
+            </li>
+          );
+        }}
+      />
+    </ClickAwayListener>
   );
 };
 
