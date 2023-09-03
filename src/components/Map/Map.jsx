@@ -248,7 +248,8 @@ const Map = ({ stations, routeSubmittedAndValid, values, searchedLatLng }) => {
           >
             <img
               width="20"
-              src="src/assets/images/search_pin.png"
+              // src="src/assets/images/search_pin.png"
+              src="/images/search_pin.png"
               style={{
                 paddingBottom: "10px",
                 zIndex: "3", // one level higher than PopoverMarker

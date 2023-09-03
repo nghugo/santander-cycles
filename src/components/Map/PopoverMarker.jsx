@@ -5,22 +5,22 @@ export default function PopoverMarker(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [startX, setStartX] = React.useState(null);
   const [startY, setStartY] = React.useState(null);
-  
+
   // separate mouse up vs down to distinguish between click vs drag
   const DELTA = 6;
 
   const handleMouseDown = (event) => {
     setStartX(event.pageX);
     setStartY(event.pageY);
-  }
+  };
 
   const handleMouseUp = (event) => {
     const diffX = Math.abs(event.pageX - startX);
     const diffY = Math.abs(event.pageY - startY);
     if (diffX < DELTA && diffY < DELTA) {
-      handleClick(event)
+      handleClick(event);
     }
-  }
+  };
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -45,10 +45,14 @@ export default function PopoverMarker(props) {
           justifyContent: "center",
           padding: "5px",
           paddingBottom: "10px",
-          zIndex: "2" // one level higher than ClusterContainer since you can manually zoom in
+          zIndex: "2", // one level higher than ClusterContainer since you can manually zoom in
         }}
       >
-        <img width="20" src="src/assets/images/bike_pin.png"></img>
+        <img
+          width="20"
+          // src="src/assets/images/bike_pin.png"
+          src="/images/bike_pin.png"
+        ></img>
       </div>
       <Popover
         id={id}
@@ -56,13 +60,13 @@ export default function PopoverMarker(props) {
         anchorEl={anchorEl}
         onClose={handleClose}
         anchorOrigin={{
-            vertical: "top",
-            horizontal: "center",
-          }}
-          transformOrigin={{
-            vertical: "bottom",
-            horizontal: "center",
-          }}
+          vertical: "top",
+          horizontal: "center",
+        }}
+        transformOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
       >
         {props.children}
       </Popover>
