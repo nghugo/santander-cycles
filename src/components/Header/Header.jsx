@@ -16,7 +16,7 @@ const Header = () => {
     <>
       <FlexAppBar>
         <HeaderTitleSection>
-          {aboveSm && <img src="favicon.png" width="40px" height="40px"/>}
+          {aboveSm && <img src="/images/favicon.png" width="40px" height="40px"/>}
           <HeaderTitle>Santander Cycles Companion</HeaderTitle>
         </HeaderTitleSection>
         <IconGroup>
