@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Card, Popover, IconButton } from "@mui/material";
+import { Card, Popover, IconButton, ClickAwayListener } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ToggleButton from "@mui/material/ToggleButton";
 import Toggler from "./Toggler";
@@ -26,7 +26,7 @@ export default function SettingsPopover({
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
@@ -39,7 +39,7 @@ export default function SettingsPopover({
           color="primary"
           onClick={handleClick}
           sx={{
-            pt: 0
+            pt: 0,
           }}
         >
           <SettingsIcon />
@@ -50,7 +50,7 @@ export default function SettingsPopover({
           anchorEl={anchorEl}
           anchorOrigin={{
             vertical: "bottom",
-            horizontal: 'left',
+            horizontal: "left",
           }}
           transformOrigin={{
             vertical: "top",
@@ -58,50 +58,64 @@ export default function SettingsPopover({
           }}
           onClose={handleClose}
         >
-          <Card
-            elevation={24}
-            sx={{
-              px: { xs: 1, sm: 3 },
-              py: { xs: 1, sm: 1.5 },
-              bgcolor: "background.paper",
-              outline: "1px solid slategrey",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              alignItems: "center",
-              rowGap: 1.5,
-              minWidth: { xs: "200px", sm: "350px" },
-            }}
-          >
-            <Toggler
-              localStorageItemKey="celsius"
-              state={celsius}
-              setstate={setCelsius}
-              sx={{ width: "100%" }}
-              orientation={aboveSm ? "horizontal" : "vertical"}
+          <ClickAwayListener onClickAway={() => setAnchorEl(null)} mouseEvent="onMouseDown">
+            <Card
+              elevation={24}
+              sx={{
+                px: { xs: 1, sm: 3 },
+                py: { xs: 1, sm: 1.5 },
+                bgcolor: "background.paper",
+                outline: "1px solid slategrey",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                alignItems: "center",
+                rowGap: 1.5,
+                minWidth: { xs: "200px", sm: "350px" },
+              }}
             >
-              <ToggleButton value="1" sx={{ width: { xs: "100%", sm: "50%" } }}>
-                Celsius
-              </ToggleButton>
-              <ToggleButton value="0" sx={{ width: { xs: "100%", sm: "50%" } }}>
-                Fahrenheit
-              </ToggleButton>
-            </Toggler>
-            <Toggler
-              localStorageItemKey="metric"
-              state={metric}
-              setstate={setMetric}
-              sx={{ width: "100%" }}
-              orientation={aboveSm ? "horizontal" : "vertical"}
-            >
-              <ToggleButton value="1" sx={{ width: { xs: "100%", sm: "50%" } }}>
-                Metric
-              </ToggleButton>
-              <ToggleButton value="0" sx={{ width: { xs: "100%", sm: "50%" } }}>
-                Imperial
-              </ToggleButton>
-            </Toggler>
-          </Card>
+              <Toggler
+                localStorageItemKey="celsius"
+                state={celsius}
+                setstate={setCelsius}
+                sx={{ width: "100%" }}
+                orientation={aboveSm ? "horizontal" : "vertical"}
+              >
+                <ToggleButton
+                  value="1"
+                  sx={{ width: { xs: "100%", sm: "50%" } }}
+                >
+                  Celsius
+                </ToggleButton>
+                <ToggleButton
+                  value="0"
+                  sx={{ width: { xs: "100%", sm: "50%" } }}
+                >
+                  Fahrenheit
+                </ToggleButton>
+              </Toggler>
+              <Toggler
+                localStorageItemKey="metric"
+                state={metric}
+                setstate={setMetric}
+                sx={{ width: "100%" }}
+                orientation={aboveSm ? "horizontal" : "vertical"}
+              >
+                <ToggleButton
+                  value="1"
+                  sx={{ width: { xs: "100%", sm: "50%" } }}
+                >
+                  Metric
+                </ToggleButton>
+                <ToggleButton
+                  value="0"
+                  sx={{ width: { xs: "100%", sm: "50%" } }}
+                >
+                  Imperial
+                </ToggleButton>
+              </Toggler>
+            </Card>
+          </ClickAwayListener>
         </Popover>
       </div>
     </>
