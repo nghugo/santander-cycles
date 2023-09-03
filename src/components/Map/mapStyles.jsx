@@ -61,8 +61,8 @@ export const RouteBannerContainer = (props) => {
       style={{
         position: "absolute",
         zIndex: 999,
-        width: "260px",
-        left: 'calc(-130px + 50%)',  // position in middle, accounting for width
+        width: "200px",
+        left: 'calc(-100px + 50%)',  // position in middle, accounting for width
         top: "10px",
         display: "flex",
         justifyContent: "center",

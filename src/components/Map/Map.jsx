@@ -172,13 +172,13 @@ const Map = ({ stations, routeSubmittedAndValid, values, searchedLatLng }) => {
         <RouteBannerContainer>
           <div>
             <Typography variant="body3">
-              Route Duration:{" "}
+              Duration:{" "}
               {latestRouteDetails.duration
                 ? latestRouteDetails.duration
                 : "N/A"}
             </Typography>
             <Typography variant="body3">
-              Route Distance:{" "}
+              Distance:{" "}
               {latestRouteDetails.distanceMeters
                 ? `${
                     Math.round(
