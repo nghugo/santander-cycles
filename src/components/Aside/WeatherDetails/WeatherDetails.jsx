@@ -45,7 +45,7 @@ function WeatherDetails() {
 
   useEffect(() => {
     fetch(
-      "http://api.weatherapi.com/v1/current.json?" +
+      "https://api.weatherapi.com/v1/current.json?" +
         new URLSearchParams({
           key: import.meta.env.VITE_WEATHER_API_KEY,
           q: "London",
