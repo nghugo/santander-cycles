@@ -30,6 +30,7 @@ function StationNameField({
         options={stationNamesSorted}
         noOptionsText="No matching station"
         onInputChange={onInputChange}
+        blurOnSelect
         value={value}
         isOptionEqualToValue={(option, value) =>
           value === option || value === ""

@@ -89,11 +89,11 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
   }, [searchTerm]);
 
   return (
-    <ClickAwayListener
-      onClickAway={() => setOpen(false)}
-      mouseEvent="onMouseDown"
-      touchEvent="onTouchStart"
-    >
+    // <ClickAwayListener
+    //   onClickAway={() => setOpen(false)}
+    //   mouseEvent="onMouseDown"
+    //   touchEvent="onTouchStart"
+    // >
       <Autocomplete
         id="search-bar"
         open={open}
@@ -107,6 +107,7 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
         }}
         onFocus={() => setOpen(true)}
         onBlur={() => setOpen(false)}
+        blurOnSelect
         value={searchTerm || ""}
         sx={{ mt: 1 }}
         renderInput={(params) => {
@@ -221,7 +222,7 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
           );
         }}
       />
-    </ClickAwayListener>
+    // </ClickAwayListener>
   );
 };
 
