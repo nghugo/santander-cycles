@@ -1,5 +1,5 @@
 import * as React from "react";
-import Popover from "@mui/material/Popover";
+import { Popover, ClickAwayListener} from "@mui/material";
 
 export default function PopoverMarker(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -68,7 +68,13 @@ export default function PopoverMarker(props) {
           horizontal: "center",
         }}
       >
-        {props.children}
+        <ClickAwayListener
+          onClickAway={() => setAnchorEl(null)}
+          mouseEvent="onMouseDown"
+          touchEvent="onTouchStart"
+        >
+          {props.children}
+        </ClickAwayListener>
       </Popover>
     </>
   );
