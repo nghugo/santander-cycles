@@ -102,7 +102,7 @@ function StationDetails({
           severity="success"
           sx={{ width: "100%" }}
         >
-          Route set and displayed on map!
+          Scroll down to see route on map!
         </Alert>
       </Snackbar>
 
