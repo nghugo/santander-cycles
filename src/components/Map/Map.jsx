@@ -103,7 +103,7 @@ const Map = ({ stations, routeSubmittedAndValid, values, searchedLatLng }) => {
 
   useEffect(() => {
     // Get Route and associated dist, time
-    if (mapref.current && routeSubmittedAndValid) {
+    if (mapref.current && routeSubmittedAndValid && values["destination"] !== values["origin"]) {
       console.log(" * * * Called Google Maps Directions API * * *");
       const polylineOptionsActual = new google.maps.Polyline({
         strokeColor: "#FF0000",
@@ -168,7 +168,7 @@ const Map = ({ stations, routeSubmittedAndValid, values, searchedLatLng }) => {
   return (
     <MapContent>
       {/* Display route information conditional on routeSubmittedAndValid */}
-      {routeSubmittedAndValid && (
+      {routeSubmittedAndValid && values["destination"] !== values["origin"] && (
         <RouteBannerContainer>
           <div>
             <Typography variant="body3">

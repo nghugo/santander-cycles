@@ -23,7 +23,10 @@ function App() {
   const routeSubmittedAndValid =
     submitted &&
     stationNamesSorted.includes(values["origin"]) &&
-    stationNamesSorted.includes(values["destination"]);
+    stationNamesSorted.includes(values["destination"]
+    // && values["destination"] !== values["origin"]
+  );
+  
 
   const getOnInputChange = (name) => {
     return (e, value) => {
@@ -32,7 +35,7 @@ function App() {
   };
 
   const isInvalidInput = (name) => {
-    return submitted && !stationNamesSorted.includes(values[name]); //
+    return submitted && (!stationNamesSorted.includes(values[name]) || values["destination"] == values["origin"]); //
   };
 
   const KEYMAP = {

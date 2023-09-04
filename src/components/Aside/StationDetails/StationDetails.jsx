@@ -8,11 +8,15 @@ import {
   Grid,
   Paper,
   Snackbar,
+  Popper,
 } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import DirectionsIcon from "@mui/icons-material/Directions";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RefreshIcon from "@mui/icons-material/Refresh";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+
 import StationCard from "./StationCard";
 
 function StationNameField({
@@ -35,6 +39,22 @@ function StationNameField({
         isOptionEqualToValue={(option, value) =>
           value === option || value === ""
         }
+        PopperComponent={(props) => (
+          <Popper
+            {...props}
+            modifiers={[
+              {
+                name: "flip",
+                options: {
+                  fallbackPlacements: [],
+                },
+              },
+            ]}
+            popperOptions={{
+              placement: "bottom",
+            }}
+          />
+        )}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -78,6 +98,9 @@ function StationDetails({
 
   const [snackOpen, setSnackOpen] = React.useState(false);
 
+  const theme = useTheme();
+  const aboveMd = useMediaQuery(theme.breakpoints.up("md"));
+
   return (
     <>
       <Snackbar
@@ -87,7 +110,6 @@ function StationDetails({
           if (reason === "clickaway") {
             return;
           }
-
           setSnackOpen(false);
         }}
       >
@@ -96,13 +118,14 @@ function StationDetails({
             if (reason === "clickaway") {
               return;
             }
-
             setSnackOpen(false);
           }}
           severity="success"
           sx={{ width: "100%" }}
         >
-          Scroll down to see route on map!
+          {aboveMd
+            ? "Route has been set on map!"
+            : "Scroll down to see route on map!"}
         </Alert>
       </Snackbar>
 
@@ -131,7 +154,11 @@ function StationDetails({
               type="button"
               onClick={() => {
                 setSubmitted(true);
-                if (originStation && destinationStation) {
+                if (
+                  originStation &&
+                  destinationStation &&
+                  originStation !== destinationStation
+                ) {
                   setSnackOpen(true);
                 }
               }}
@@ -146,7 +173,7 @@ function StationDetails({
               type="button"
               onClick={() => {
                 setSubmitted(false);
-                setValues({ from: "", to: "" });
+                setValues({ origin: "", destination: "" });
               }}
               variant="contained"
               color="secondary"
