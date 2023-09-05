@@ -30,11 +30,13 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
           "https://api.locationiq.com/v1/autocomplete?" +
             new URLSearchParams({
               key: import.meta.env.VITE_LOCATION_IQ_API_KEY,
-              countrycodes: "gb",
               format: "json",
               q: searchTerm,
               limit: "6",
               dedupe: "1",
+              countrycodes: "gb",  // restrict results to Great Britian
+              viewbox: "0.391658,51.725708,-0.570503,51.242582",  // specify coordinates of the London area
+              bounded: "1",  //  restrict results to the London area
             })
         )
           .then((response) => {
@@ -130,7 +132,7 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
         return (
           <TextField
             {...params}
-            label="Search Location"
+            label="Search London"
             InputProps={{
               ...params.InputProps,
               startAdornment: (
