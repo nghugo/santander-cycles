@@ -34,9 +34,9 @@ const SearchBar = ({ searchedLatLng, setSearchedLatLng }) => {
               q: searchTerm,
               limit: "6",
               dedupe: "1",
-              countrycodes: "gb",  // restrict results to Great Britian
-              viewbox: "0.391658,51.725708,-0.570503,51.242582",  // specify coordinates of the London area
-              bounded: "1",  //  restrict results to the London area
+              countrycodes: "gb", // restrict results to Great Britian
+              viewbox: "0.1009,51.5806,-0.3420,51.4265", // searcharable coordinate area representing London (order: max lon, max lat, min lon, min lat as specified in docs)
+              bounded: "1", // restrict results to the London area
             })
         )
           .then((response) => {
