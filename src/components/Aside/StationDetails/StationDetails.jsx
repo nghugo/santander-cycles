@@ -130,7 +130,7 @@ function StationDetails({
       </Snackbar>
 
       <Paper elevation={3} sx={{ p: { xs: 1, sm: 2 }, mb: { xs: 4, md: 1 } }}>
-        <Typography variant="h5">Station Details</Typography>
+        <Typography variant="h5">Station Routing</Typography>
 
         <Box component="form" noValidate autoComplete="off">
           <StationNameField
