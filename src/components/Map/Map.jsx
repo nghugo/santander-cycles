@@ -54,7 +54,8 @@ import { ClusterElement, ClusterText } from "./Cluster";
 });
 
 const Map = ({ stations, routeSubmittedAndValid, values, searchedLatLng }) => {
-  const mapref = useRef();
+  const mapref = useRef(null);
+  const [mapLoaded, setMapLoaded] = useState(false);
   const directionsService = useRef();
   const directionsRenderer = useRef();
   const [bounds, setBounds] = useState(null);
@@ -200,7 +201,7 @@ const Map = ({ stations, routeSubmittedAndValid, values, searchedLatLng }) => {
       )}
 
       {/* Display rotating circle when map is still loading */}
-      {!mapref.current && (
+      {!mapLoaded && (
         <CircularProgress
           sx={{
             position: "absolute",
@@ -225,6 +226,7 @@ const Map = ({ stations, routeSubmittedAndValid, values, searchedLatLng }) => {
         yesIWantToUseGoogleMapApiInternals
         onGoogleApiLoaded={({ map }) => {
           mapref.current = map;
+          setMapLoaded(mapref && mapref.current)
           map.setOptions({
             clickableIcons: false,
             fullscreenControl: false,
