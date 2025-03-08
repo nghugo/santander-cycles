@@ -32,7 +32,7 @@ const Header = () => {
               />
             </svg>
           </IconLink>
-          <IconLink href="https://www.linkedin.com/in/hugo-ryan-ng-312730197/">
+          <IconLink href="https://www.linkedin.com/in/hugorn/">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="1.7em"
